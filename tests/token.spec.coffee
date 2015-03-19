@@ -1,6 +1,7 @@
 chai = require('chai')
 expect = chai.expect
 token = require('../lib/token')
+johnDoeFixture = require('./tokens.json').johndoe
 
 describe 'Token:', ->
 
@@ -98,3 +99,76 @@ describe 'Token:', ->
 				expect(token.has()).to.be.true
 				token.remove()
 				expect(token.has()).to.be.false
+
+	describe '.parse()', ->
+
+		it 'should throw if no token', ->
+			expect ->
+				token.parse()
+			.to.throw('Missing token')
+
+		it 'should throw if token is not a string', ->
+			expect ->
+				token.parse(123)
+			.to.throw('Invalid token: not a string: 123')
+
+		it 'should throw if token is an empty string', ->
+			expect ->
+				token.parse('')
+			.to.throw('Invalid token: empty string')
+
+		it 'should throw if token is a string containing spaces', ->
+			expect ->
+				token.parse('    ')
+			.to.throw('Invalid token: empty string')
+
+		describe 'given a valid token', ->
+
+			beforeEach ->
+				@fixture = johnDoeFixture
+
+			it 'should parse the token', ->
+				result = token.parse(johnDoeFixture.token)
+				expect(result.email).to.equal(johnDoeFixture.data.email)
+				expect(result.username).to.equal(johnDoeFixture.data.username)
+
+		describe 'given an invalid token', ->
+
+			describe 'given a non base64 data', ->
+
+				beforeEach ->
+					@token = '1234.asdf.5678'
+
+				it 'should throw an error', ->
+					expect =>
+						token.parse(@token)
+					.to.throw("Invalid token: #{@token}")
+
+			describe 'given a token without three sections separated by a colon', ->
+
+				beforeEach ->
+					@token = '1234'
+
+				it 'should throw an error', ->
+					expect =>
+						token.parse(@token)
+					.to.throw("Invalid token: #{@token}")
+
+	describe '.getUsername()', ->
+
+		describe 'given a logged in user', ->
+
+			beforeEach ->
+				token.set(johnDoeFixture.token)
+
+			it 'should return the correct username', ->
+				username = token.getUsername()
+				expect(username).to.equal(johnDoeFixture.data.username)
+
+		describe 'given not logged in user', ->
+
+			beforeEach ->
+				token.remove()
+
+			it 'should return undefined', ->
+				expect(token.getUsername()).to.be.undefined

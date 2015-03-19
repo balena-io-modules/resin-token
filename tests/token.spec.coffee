@@ -10,22 +10,22 @@ describe 'Token:', ->
 		it 'should throw if no token', ->
 			expect ->
 				token.set()
-			.to.throw('Missing token')
+			.to.throw('Missing parameter: token')
 
 		it 'should throw if token is not a string', ->
 			expect ->
 				token.set(123)
-			.to.throw('Invalid token: not a string: 123')
+			.to.throw('Invalid parameter token: 123. not a string.')
 
 		it 'should throw if token is an empty string', ->
 			expect ->
 				token.set('')
-			.to.throw('Invalid token: empty string')
+			.to.throw('Invalid parameter token: . empty string')
 
 		it 'should throw if token is a string containing spaces', ->
 			expect ->
 				token.set('    ')
-			.to.throw('Invalid token: empty string')
+			.to.throw('Invalid parameter token: . empty string')
 
 		describe 'given no token', ->
 
@@ -105,22 +105,22 @@ describe 'Token:', ->
 		it 'should throw if no token', ->
 			expect ->
 				token.parse()
-			.to.throw('Missing token')
+			.to.throw('Missing parameter: token')
 
 		it 'should throw if token is not a string', ->
 			expect ->
 				token.parse(123)
-			.to.throw('Invalid token: not a string: 123')
+			.to.throw('Invalid parameter token: 123. not a string.')
 
 		it 'should throw if token is an empty string', ->
 			expect ->
 				token.parse('')
-			.to.throw('Invalid token: empty string')
+			.to.throw('Invalid parameter token: . empty string')
 
 		it 'should throw if token is a string containing spaces', ->
 			expect ->
 				token.parse('    ')
-			.to.throw('Invalid token: empty string')
+			.to.throw('Invalid parameter token: . empty string')
 
 		describe 'given a valid token', ->
 
@@ -142,7 +142,7 @@ describe 'Token:', ->
 				it 'should throw an error', ->
 					expect =>
 						token.parse(@token)
-					.to.throw("Invalid token: #{@token}")
+					.to.throw("Malformed token: #{@token}")
 
 			describe 'given a token without three sections separated by a colon', ->
 
@@ -152,7 +152,7 @@ describe 'Token:', ->
 				it 'should throw an error', ->
 					expect =>
 						token.parse(@token)
-					.to.throw("Invalid token: #{@token}")
+					.to.throw("Malformed token: #{@token}")
 
 	describe '.getUsername()', ->
 

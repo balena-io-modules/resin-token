@@ -1,8 +1,10 @@
-var atob, settings, storage, _;
+var atob, errors, settings, storage, _;
 
 _ = require('lodash');
 
 atob = require('atob');
+
+errors = require('resin-errors');
 
 settings = require('./settings');
 
@@ -10,14 +12,14 @@ storage = require('./storage');
 
 exports.set = function(token) {
   if (token == null) {
-    throw new Error('Missing token');
+    throw new errors.ResinMissingParameter('token');
   }
   if (!_.isString(token)) {
-    throw new Error("Invalid token: not a string: " + token);
+    throw new errors.ResinInvalidParameter('token', token, 'not a string');
   }
   token = token.trim();
   if (_.isEmpty(token)) {
-    throw new Error('Invalid token: empty string');
+    throw new errors.ResinInvalidParameter('token', token, 'empty string');
   }
   return storage.setItem(settings.key, token);
 };
@@ -37,20 +39,20 @@ exports.remove = function() {
 exports.parse = function(token) {
   var data, header, signature, _ref;
   if (token == null) {
-    throw new Error('Missing token');
+    throw new errors.ResinMissingParameter('token');
   }
   if (!_.isString(token)) {
-    throw new Error("Invalid token: not a string: " + token);
+    throw new errors.ResinInvalidParameter('token', token, 'not a string');
   }
   token = token.trim();
   if (_.isEmpty(token)) {
-    throw new Error('Invalid token: empty string');
+    throw new errors.ResinInvalidParameter('token', token, 'empty string');
   }
   try {
     _ref = token.split('.'), header = _ref[0], data = _ref[1], signature = _ref[2];
     return JSON.parse(atob(data));
   } catch (_error) {
-    throw new Error("Invalid token: " + token);
+    throw new errors.ResinMalformedToken(token);
   }
 };
 

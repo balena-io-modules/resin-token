@@ -69,6 +69,14 @@ Support
 
 If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-token/issues/new) on GitHub.
 
+ChangeLog
+---------
+
+### v1.1.0
+
+- Implement `token.parse()`.
+- Implement `token.getUsername()`.
+
 License
 -------
 

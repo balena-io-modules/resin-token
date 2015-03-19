@@ -1,6 +1,8 @@
-var settings, storage, _;
+var atob, settings, storage, _;
 
 _ = require('lodash');
+
+atob = require('atob');
 
 settings = require('./settings');
 
@@ -30,4 +32,34 @@ exports.has = function() {
 
 exports.remove = function() {
   return storage.removeItem(settings.key);
+};
+
+exports.parse = function(token) {
+  var data, header, signature, _ref;
+  if (token == null) {
+    throw new Error('Missing token');
+  }
+  if (!_.isString(token)) {
+    throw new Error("Invalid token: not a string: " + token);
+  }
+  token = token.trim();
+  if (_.isEmpty(token)) {
+    throw new Error('Invalid token: empty string');
+  }
+  try {
+    _ref = token.split('.'), header = _ref[0], data = _ref[1], signature = _ref[2];
+    return JSON.parse(atob(data));
+  } catch (_error) {
+    throw new Error("Invalid token: " + token);
+  }
+};
+
+exports.getUsername = function() {
+  var token, tokenData;
+  if (!exports.has()) {
+    return;
+  }
+  token = exports.get();
+  tokenData = exports.parse(token);
+  return tokenData.username;
 };

@@ -35,6 +35,14 @@ Return `true` if there is a saved token. `false` otherwise.
 
 Remove the current token.
 
+### Object token.parse(String token)
+
+Parse the token data and return an object with it.
+
+### String token.getUsername()
+
+Get the username of the current logged in token. `undefined` otherwise.
+
 Tests
 -----
 

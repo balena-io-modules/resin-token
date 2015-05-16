@@ -172,3 +172,26 @@ describe 'Token:', ->
 
 			it 'should return undefined', ->
 				expect(token.getUsername()).to.be.undefined
+
+	describe '.getUserId()', ->
+
+		describe 'given a logged in user', ->
+
+			beforeEach ->
+				token.set(johnDoeFixture.token)
+
+			it 'should return a number', ->
+				userId = token.getUserId()
+				expect(userId).to.be.a('number')
+
+			it 'should return the correct user id', ->
+				userId = token.getUserId()
+				expect(userId).to.equal(johnDoeFixture.data.id)
+
+		describe 'given not logged in user', ->
+
+			beforeEach ->
+				token.remove()
+
+			it 'should return undefined', ->
+				expect(token.getUserId()).to.be.undefined

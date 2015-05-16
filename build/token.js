@@ -65,3 +65,13 @@ exports.getUsername = function() {
   tokenData = exports.parse(token);
   return tokenData.username;
 };
+
+exports.getUserId = function() {
+  var token, tokenData;
+  if (!exports.has()) {
+    return;
+  }
+  token = exports.get();
+  tokenData = exports.parse(token);
+  return tokenData.id;
+};

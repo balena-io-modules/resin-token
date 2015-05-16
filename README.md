@@ -43,6 +43,10 @@ Parse the token data and return an object with it.
 
 Get the username of the current logged in token. `undefined` otherwise.
 
+### Number token.getUserId()
+
+Get the user id of the current logged in token. `undefined` otherwise.
+
 Tests
 -----
 

@@ -52,3 +52,9 @@ exports.getUsername = ->
 	token = exports.get()
 	tokenData = exports.parse(token)
 	return tokenData.username
+
+exports.getUserId = ->
+	return if not exports.has()
+	token = exports.get()
+	tokenData = exports.parse(token)
+	return tokenData.id

@@ -76,6 +76,11 @@ If you're having any problem, please [raise an issue](https://github.com/resin-i
 ChangeLog
 ---------
 
+### v1.3.0
+
+- Implement `token.getUserId()`.
+- Configure Hound CI.
+
 ### v1.2.0
 
 - Make use of [resin-errors](https://github.com/resin-io/resin-errors).

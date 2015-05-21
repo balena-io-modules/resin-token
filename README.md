@@ -4,6 +4,7 @@ resin-token
 [![npm version](https://badge.fury.io/js/resin-token.svg)](http://badge.fury.io/js/resin-token)
 [![dependencies](https://david-dm.org/resin-io/resin-token.png)](https://david-dm.org/resin-io/resin-token.png)
 [![Build Status](https://travis-ci.org/resin-io/resin-token.svg?branch=master)](https://travis-ci.org/resin-io/resin-token)
+[![Build status](https://ci.appveyor.com/api/projects/status/i01h2qi3raf0acm7?svg=true)](https://ci.appveyor.com/project/jviotti/resin-token)
 
 Resin.io session token utilities.
 

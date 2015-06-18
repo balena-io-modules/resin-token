@@ -1,136 +1,100 @@
-chai = require('chai')
-expect = chai.expect
+m = require('mochainon')
 token = require('../lib/token')
-johnDoeFixture = require('./tokens.json').johndoe
+johnDoeFixture = require('./fixtures/tokens.json').johndoe
 
 describe 'Token:', ->
 
 	describe '.set()', ->
 
-		it 'should throw if no token', ->
-			expect ->
-				token.set()
-			.to.throw('Missing parameter: token')
-
-		it 'should throw if token is not a string', ->
-			expect ->
-				token.set(123)
-			.to.throw('Invalid parameter token: 123. not a string.')
-
-		it 'should throw if token is an empty string', ->
-			expect ->
-				token.set('')
-			.to.throw('Invalid parameter token: . empty string')
-
-		it 'should throw if token is a string containing spaces', ->
-			expect ->
-				token.set('    ')
-			.to.throw('Invalid parameter token: . empty string')
-
 		describe 'given no token', ->
 
-			beforeEach ->
-				token.remove()
+			beforeEach (done) ->
+				token.remove().then(done)
 
-			it 'should set the token', ->
-				expect(token.has()).to.be.false
-				token.set('1234')
-				expect(token.get()).to.equal('1234')
+			it 'should set the token', (done) ->
+				m.chai.expect(token.get()).to.eventually.be.undefined
+				token.set('1234').then ->
+					m.chai.expect(token.get()).to.eventually.equal('1234')
+					done()
 
-			it 'should trim the token', ->
-				expect(token.has()).to.be.false
-				token.set('   1234    ')
-				expect(token.get()).to.equal('1234')
+			it 'should trim the token', (done) ->
+				m.chai.expect(token.get()).to.eventually.be.undefined
+				token.set('   1234    ').then ->
+					m.chai.expect(token.get()).to.eventually.equal('1234')
+					done()
 
 		describe 'given a token', ->
 
-			beforeEach ->
-				token.set('1234')
+			beforeEach (done) ->
+				token.set('1234').then(done)
 
-			it 'should be able to replace the token', ->
-				expect(token.get()).to.equal('1234')
-				token.set('5678')
-				expect(token.get()).to.equal('5678')
+			it 'should be able to replace the token', (done) ->
+				m.chai.expect(token.get()).to.eventually.equal('1234')
+				token.set('5678').then ->
+					m.chai.expect(token.get()).to.eventually.equal('5678')
+					done()
 
 	describe '.get()', ->
 
 		describe 'given no token', ->
 
-			beforeEach ->
-				token.remove()
+			beforeEach (done) ->
+				token.remove().then(done)
 
-			it 'should return undefined', ->
-				expect(token.get()).to.be.undefined
+			it 'should eventually be undefined', ->
+				m.chai.expect(token.get()).to.eventually.be.undefined
 
 		describe 'given a token', ->
 
-			beforeEach ->
-				token.set('1234')
+			beforeEach (done) ->
+				token.set('1234').then(done)
 
-			it 'should return that token', ->
-				expect(token.get()).to.equal('1234')
+			it 'should eventually return the token', ->
+				m.chai.expect(token.get()).to.eventually.equal('1234')
 
 	describe '.has()', ->
 
 		describe 'given no token', ->
 
-			beforeEach ->
-				token.remove()
+			beforeEach (done) ->
+				token.remove().then(done)
 
-			it 'should return false', ->
-				expect(token.has()).to.be.false
+			it 'should eventually be false', ->
+				m.chai.expect(token.has()).to.eventually.be.false
 
 		describe 'given a token', ->
 
-			beforeEach ->
-				token.set('1234')
+			beforeEach (done) ->
+				token.set('1234').then(done)
 
-			it 'should return true', ->
-				expect(token.has()).to.be.true
+			it 'should eventually be true', ->
+				m.chai.expect(token.has()).to.eventually.be.true
 
 	describe '.remove()', ->
 
 		describe 'given a token', ->
 
-			beforeEach ->
-				token.set('1234')
+			beforeEach (done) ->
+				token.set('1234').then(done)
 
-			it 'should remove the token', ->
-				expect(token.has()).to.be.true
-				token.remove()
-				expect(token.has()).to.be.false
+			it 'should remove the token', (done) ->
+				m.chai.expect(token.has()).to.eventually.be.true
+				token.remove().then ->
+					m.chai.expect(token.has()).to.eventually.be.false
+					done()
 
 	describe '.parse()', ->
-
-		it 'should throw if no token', ->
-			expect ->
-				token.parse()
-			.to.throw('Missing parameter: token')
-
-		it 'should throw if token is not a string', ->
-			expect ->
-				token.parse(123)
-			.to.throw('Invalid parameter token: 123. not a string.')
-
-		it 'should throw if token is an empty string', ->
-			expect ->
-				token.parse('')
-			.to.throw('Invalid parameter token: . empty string')
-
-		it 'should throw if token is a string containing spaces', ->
-			expect ->
-				token.parse('    ')
-			.to.throw('Invalid parameter token: . empty string')
 
 		describe 'given a valid token', ->
 
 			beforeEach ->
 				@fixture = johnDoeFixture
 
-			it 'should parse the token', ->
-				result = token.parse(johnDoeFixture.token)
-				expect(result.email).to.equal(johnDoeFixture.data.email)
-				expect(result.username).to.equal(johnDoeFixture.data.username)
+			it 'should parse the token', (done) ->
+				token.parse(@fixture.token).then (result) =>
+					m.chai.expect(result.email).to.equal(@fixture.data.email)
+					m.chai.expect(result.username).to.equal(@fixture.data.username)
+					done()
 
 		describe 'given an invalid token', ->
 
@@ -139,59 +103,72 @@ describe 'Token:', ->
 				beforeEach ->
 					@token = '1234.asdf.5678'
 
-				it 'should throw an error', ->
-					expect =>
-						token.parse(@token)
-					.to.throw("Malformed token: #{@token}")
+				it 'should reject the promise with an error message', ->
+					m.chai.expect(token.parse(@token)).to.be.rejectedWith("Malformed token: #{@token}")
 
-			describe 'given a token without three sections separated by a colon', ->
+	describe '.getProperty()', ->
 
-				beforeEach ->
-					@token = '1234'
+		describe 'given a logged in user', ->
 
-				it 'should throw an error', ->
-					expect =>
-						token.parse(@token)
-					.to.throw("Malformed token: #{@token}")
+			beforeEach (done) ->
+				@fixture = johnDoeFixture
+				token.set(@fixture.token).then(done)
+
+			describe 'given the property exists', ->
+
+				it 'should eventually equal the property', ->
+					m.chai.expect(token.getProperty('username')).to.eventually.equal(@fixture.data.username)
+
+			describe 'given the property does not exist', ->
+
+				it 'should eventually equal undefined', ->
+					m.chai.expect(token.getProperty('foobarbaz')).to.eventually.be.undefined
+
+		describe 'given not logged in user', ->
+
+			beforeEach (done) ->
+				token.remove().then(done)
+
+			it 'should eventually be undefined', ->
+				m.chai.expect(token.getProperty('username')).to.eventually.be.undefined
 
 	describe '.getUsername()', ->
 
 		describe 'given a logged in user', ->
 
-			beforeEach ->
-				token.set(johnDoeFixture.token)
+			beforeEach (done) ->
+				@fixture = johnDoeFixture
+				token.set(@fixture.token).then(done)
 
-			it 'should return the correct username', ->
-				username = token.getUsername()
-				expect(username).to.equal(johnDoeFixture.data.username)
+			it 'should eventually be the correct username', ->
+				m.chai.expect(token.getUsername()).to.eventually.equal(@fixture.data.username)
 
 		describe 'given not logged in user', ->
 
-			beforeEach ->
-				token.remove()
+			beforeEach (done) ->
+				token.remove().then(done)
 
-			it 'should return undefined', ->
-				expect(token.getUsername()).to.be.undefined
+			it 'should eventually be undefined', ->
+				m.chai.expect(token.getUsername()).to.eventually.be.undefined
 
 	describe '.getUserId()', ->
 
 		describe 'given a logged in user', ->
 
-			beforeEach ->
-				token.set(johnDoeFixture.token)
+			beforeEach (done) ->
+				@fixture = johnDoeFixture
+				token.set(@fixture.token).then(done)
 
-			it 'should return a number', ->
-				userId = token.getUserId()
-				expect(userId).to.be.a('number')
+			it 'should eventually be a number', ->
+				m.chai.expect(token.getUserId()).to.eventually.be.a('number')
 
-			it 'should return the correct user id', ->
-				userId = token.getUserId()
-				expect(userId).to.equal(johnDoeFixture.data.id)
+			it 'should eventually equal the correct user id', ->
+				m.chai.expect(token.getUserId()).to.eventually.equal(@fixture.data.id)
 
 		describe 'given not logged in user', ->
 
-			beforeEach ->
-				token.remove()
+			beforeEach (done) ->
+				token.remove().then(done)
 
-			it 'should return undefined', ->
-				expect(token.getUserId()).to.be.undefined
+			it 'should eventually be undefined', ->
+				m.chai.expect(token.getUserId()).to.eventually.be.undefined

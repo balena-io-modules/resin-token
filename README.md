@@ -1,5 +1,5 @@
 resin-token
--------------
+-----------
 
 [![npm version](https://badge.fury.io/js/resin-token.svg)](http://badge.fury.io/js/resin-token)
 [![dependencies](https://david-dm.org/resin-io/resin-token.png)](https://david-dm.org/resin-io/resin-token.png)
@@ -7,6 +7,11 @@ resin-token
 [![Build status](https://ci.appveyor.com/api/projects/status/i01h2qi3raf0acm7?svg=true)](https://ci.appveyor.com/project/jviotti/resin-token)
 
 Resin.io session token utilities.
+
+Role
+----
+
+The intention of this module is to provide low level access to how a Resin.io session token is parsed and persisted.
 
 Installation
 ------------
@@ -20,33 +25,138 @@ $ npm install --save resin-token
 Documentation
 -------------
 
-### token.set(String token)
 
-Set the current token.
+* [token](#module_token)
+  * [.set(token)](#module_token.set) ⇒ <code>Promise.&lt;String&gt;</code>
+  * [.get()](#module_token.get) ⇒ <code>Promise.&lt;String&gt;</code>
+  * [.has()](#module_token.has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+  * [.remove()](#module_token.remove)
+  * [.parse(token)](#module_token.parse) ⇒ <code>Promise.&lt;Object&gt;</code>
+  * [.getProperty(property)](#module_token.getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
+  * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
+  * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
 
-### String token.get()
+<a name="module_token.set"></a>
+### token.set(token) ⇒ <code>Promise.&lt;String&gt;</code>
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Set the token  
+**Returns**: <code>Promise.&lt;String&gt;</code> - token  
+**Access:** public  
 
-Get the current token, or `undefined`.
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>String</code> | token |
 
-### Boolean token.has()
+**Example**  
+```js
+token.set('...')
+```
+<a name="module_token.get"></a>
+### token.get() ⇒ <code>Promise.&lt;String&gt;</code>
+This function resolved to undefined if no token.
 
-Return `true` if there is a saved token. `false` otherwise.
-
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get the token  
+**Returns**: <code>Promise.&lt;String&gt;</code> - token  
+**Access:** public  
+**Example**  
+```js
+token.get().then (sessionToken) ->
+		console.log(sessionToken)
+```
+<a name="module_token.has"></a>
+### token.has() ⇒ <code>Promise.&lt;Boolean&gt;</code>
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Has a token  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - has token  
+**Access:** public  
+**Example**  
+```js
+token.has().then (hasToken) ->
+		if hasToken
+			console.log('There is a token!')
+		else
+			console.log('There is not a token!')
+```
+<a name="module_token.remove"></a>
 ### token.remove()
+This promise is not rejected if there was no token at the time of removal.
 
-Remove the current token.
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Remove the token  
+**Access:** public  
+**Example**  
+```js
+token.remove()
+```
+<a name="module_token.parse"></a>
+### token.parse(token) ⇒ <code>Promise.&lt;Object&gt;</code>
+This function does't save the token. Use `token.set()` if you want to persist it afterwards.
 
-### Object token.parse(String token)
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Parse a token  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - parsed token  
+**Access:** public  
 
-Parse the token data and return an object with it.
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>String</code> | token |
 
-### String token.getUsername()
+**Example**  
+```js
+token.parse('...').then (parsedToken) ->
+		console.log(parsedToken)
+```
+<a name="module_token.getProperty"></a>
+### token.getProperty(property) ⇒ <code>Promise.&lt;\*&gt;</code>
+This function resolves to undefined for any property name if there is no token.
+It also resolved to undefined if the property name is invalid.
 
-Get the username of the current logged in token. `undefined` otherwise.
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get a property from a saved token  
+**Returns**: <code>Promise.&lt;\*&gt;</code> - property value  
+**Access:** public  
 
-### Number token.getUserId()
+| Param | Type | Description |
+| --- | --- | --- |
+| property | <code>String</code> | property name |
 
-Get the user id of the current logged in token. `undefined` otherwise.
+**Example**  
+```js
+token.getProperty('username').then (username) ->
+		console.log(username)
+```
+<a name="module_token.getUsername"></a>
+### token.getUsername() ⇒ <code>Promise.&lt;String&gt;</code>
+This function resolves to undefined if there is no token
+
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get the username of the saved token  
+**Returns**: <code>Promise.&lt;String&gt;</code> - username  
+**Access:** public  
+**Example**  
+```js
+token.getUsername().then (username) ->
+		console.log(username)
+```
+<a name="module_token.getUserId"></a>
+### token.getUserId() ⇒ <code>Promise.&lt;Number&gt;</code>
+This function resolves to undefined if there is no token
+
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get the user id of the saved token  
+**Returns**: <code>Promise.&lt;Number&gt;</code> - user id  
+**Access:** public  
+**Example**  
+```js
+token.getUserId().then (userId) ->
+		console.log(userId)
+```
+
+Support
+-------
+
+If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-token/issues/new) on GitHub and the Resin.io team will be happy to help.
 
 Tests
 -----
@@ -68,28 +178,6 @@ Before submitting a PR, please make sure that you include tests, and that [coffe
 ```sh
 $ gulp lint
 ```
-
-Support
--------
-
-If you're having any problem, please [raise an issue](https://github.com/resin-io/resin-token/issues/new) on GitHub.
-
-ChangeLog
----------
-
-### v1.3.0
-
-- Implement `token.getUserId()`.
-- Configure Hound CI.
-
-### v1.2.0
-
-- Make use of [resin-errors](https://github.com/resin-io/resin-errors).
-
-### v1.1.0
-
-- Implement `token.parse()`.
-- Implement `token.getUsername()`.
 
 License
 -------

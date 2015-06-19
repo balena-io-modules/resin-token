@@ -26,17 +26,53 @@ THE SOFTWARE.
 /**
  * @module token
  */
-var Promise, TOKEN_KEY, atob, errors, storage;
+var Promise, TOKEN_KEY, atob, errors, requestAsync, settings, storage, url;
 
 Promise = require('bluebird');
 
 atob = require('atob');
 
+url = require('url');
+
+requestAsync = Promise.promisify(require('request'));
+
 errors = require('resin-errors');
+
+settings = require('resin-settings-client');
 
 storage = require('./storage');
 
 TOKEN_KEY = 'token';
+
+
+/**
+ * @summary Check if a token is valid
+ * @function
+ * @public
+ *
+ * @description
+ * Notice this function makes an HTTP request to determine to token validity.
+ *
+ * @param {String} token - token
+ * @returns {Promise<Boolean>} is valid
+ *
+ * @example
+ * token.isValid('...').then (isValid) ->
+ * 	if isValid
+ * 		console.log('The token is valid!')
+ */
+
+exports.isValid = function(token) {
+  return requestAsync({
+    method: 'GET',
+    url: url.resolve(settings.get('remoteUrl'), '/whoami'),
+    headers: {
+      Authorization: "Bearer " + token
+    }
+  }).spread(function(response) {
+    return response.statusCode === 200;
+  });
+};
 
 
 /**
@@ -52,7 +88,10 @@ TOKEN_KEY = 'token';
  */
 
 exports.set = function(token) {
-  return Promise["try"](function() {
+  return exports.isValid(token).then(function(isValid) {
+    if (!isValid) {
+      throw new Error('The token is invalid');
+    }
     return storage.setItem(TOKEN_KEY, token.trim());
   });
 };
@@ -109,6 +148,8 @@ exports.has = function() {
  *
  * @description
  * This promise is not rejected if there was no token at the time of removal.
+ *
+ * @returns {Promise}
  *
  * @example
  * token.remove()

@@ -27,15 +27,35 @@ Documentation
 
 
 * [token](#module_token)
+  * [.isValid(token)](#module_token.isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
   * [.set(token)](#module_token.set) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.get()](#module_token.get) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.has()](#module_token.has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-  * [.remove()](#module_token.remove)
+  * [.remove()](#module_token.remove) ⇒ <code>Promise</code>
   * [.parse(token)](#module_token.parse) ⇒ <code>Promise.&lt;Object&gt;</code>
   * [.getProperty(property)](#module_token.getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
   * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
 
+<a name="module_token.isValid"></a>
+### token.isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+Notice this function makes an HTTP request to determine to token validity.
+
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Check if a token is valid  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - is valid  
+**Access:** public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>String</code> | token |
+
+**Example**  
+```js
+token.isValid('...').then (isValid) ->
+	if isValid
+		console.log('The token is valid!')
+```
 <a name="module_token.set"></a>
 ### token.set(token) ⇒ <code>Promise.&lt;String&gt;</code>
 **Kind**: static method of <code>[token](#module_token)</code>  
@@ -79,7 +99,7 @@ token.has().then (hasToken) ->
 			console.log('There is not a token!')
 ```
 <a name="module_token.remove"></a>
-### token.remove()
+### token.remove() ⇒ <code>Promise</code>
 This promise is not rejected if there was no token at the time of removal.
 
 **Kind**: static method of <code>[token](#module_token)</code>  

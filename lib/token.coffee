@@ -41,9 +41,6 @@ TOKEN_KEY = 'token'
 # @function
 # @public
 #
-# @description
-# Notice this function makes an HTTP request to determine to token validity.
-#
 # @param {String} token - token
 # @returns {Promise<Boolean>} is valid
 #
@@ -53,13 +50,10 @@ TOKEN_KEY = 'token'
 # 		console.log('The token is valid!')
 ###
 exports.isValid = (token) ->
-	return requestAsync
-		method: 'GET'
-		url: url.resolve(settings.get('remoteUrl'), '/whoami')
-		headers:
-			Authorization: "Bearer #{token}"
-	.spread (response) ->
-		return response.statusCode is 200
+	exports.parse(token)
+		.return(true)
+		.catch errors.ResinMalformedToken, ->
+			return false
 
 ###*
 # @summary Set the token

@@ -9,28 +9,11 @@ describe 'Token:', ->
 
 	describe '.isValid()', ->
 
-		describe 'given a whoami endpoint that consideres a token as valid', ->
+		it 'should become true if the token is valid', ->
+			m.chai.expect(token.isValid(johnDoeFixture.token)).to.eventually.be.true
 
-			beforeEach ->
-				nock(settings.get('remoteUrl'))
-					.get('/whoami')
-					.reply (uri, body) ->
-
-						# Nock for some reason makes header property names lowercase.
-						# We are really referring to Authorization instead.
-						if @req.headers.authorization is 'Bearer Foo'
-							return [ 200, 'Foo' ]
-						else
-							return [ 401, 'Unauthorized' ]
-
-			afterEach ->
-				nock.cleanAll()
-
-			it 'should become true if passing the valid token', ->
-				m.chai.expect(token.isValid('Foo')).to.eventually.be.true
-
-			it 'should become false if passing an invalid token', ->
-				m.chai.expect(token.isValid('Bar')).to.eventually.be.false
+		it 'should become false if the token is invalid',  ->
+			m.chai.expect(token.isValid('hello')).to.eventually.be.false
 
 	describe '.set()', ->
 

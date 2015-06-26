@@ -43,8 +43,6 @@ Documentation
 
 <a name="module_token.isValid"></a>
 ### token.isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-Notice this function makes an HTTP request to determine to token validity.
-
 **Kind**: static method of <code>[token](#module_token)</code>  
 **Summary**: Check if a token is valid  
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - is valid  

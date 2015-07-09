@@ -270,3 +270,23 @@ exports.getUsername = function() {
 exports.getUserId = function() {
   return exports.getProperty('id');
 };
+
+
+/**
+ * @summary Get the email of the saved token
+ * @function
+ * @public
+ *
+ * @description
+ * This function resolves to undefined if there is no token
+ *
+ * @returns {Promise<String>} email
+ *
+ * @example
+ * token.getEmail().then (email) ->
+ *		console.log(email)
+ */
+
+exports.getEmail = function() {
+  return exports.getProperty('email');
+};

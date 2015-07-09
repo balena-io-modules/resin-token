@@ -232,3 +232,25 @@ describe 'Token:', ->
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getUserId()).to.eventually.be.undefined
+
+		describe '.getEmail()', ->
+
+			describe 'given a logged in user', ->
+
+				beforeEach (done) ->
+					@fixture = johnDoeFixture
+					token.set(@fixture.token).then(done)
+
+				it 'should eventually be a string', ->
+					m.chai.expect(token.getEmail()).to.eventually.be.a('string')
+
+				it 'should eventually equal the correct email', ->
+					m.chai.expect(token.getEmail()).to.eventually.equal(@fixture.data.email)
+
+			describe 'given not logged in user', ->
+
+				beforeEach (done) ->
+					token.remove().then(done)
+
+				it 'should eventually be undefined', ->
+					m.chai.expect(token.getEmail()).to.eventually.be.undefined

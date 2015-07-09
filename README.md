@@ -41,6 +41,7 @@ Documentation
   * [.getProperty(property)](#module_token.getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
   * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
+  * [.getEmail()](#module_token.getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="module_token.isValid"></a>
 ### token.isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
@@ -187,6 +188,19 @@ This function resolves to undefined if there is no token
 ```js
 token.getUserId().then (userId) ->
 		console.log(userId)
+```
+<a name="module_token.getEmail"></a>
+### token.getEmail() ⇒ <code>Promise.&lt;String&gt;</code>
+This function resolves to undefined if there is no token
+
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get the email of the saved token  
+**Returns**: <code>Promise.&lt;String&gt;</code> - email  
+**Access:** public  
+**Example**  
+```js
+token.getEmail().then (email) ->
+		console.log(email)
 ```
 
 Support

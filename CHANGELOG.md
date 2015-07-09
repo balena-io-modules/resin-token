@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.3.0] - 2015-07-09
+
+### Added
+
+- Implement `token.getData()`.
+- Implement `token.getEmail()`.
+
 ## [2.2.0] - 2015-06-26
 
 ### Changed
@@ -47,6 +54,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `token.parse()`.
 - Implement `token.getUsername()`.
 
+[2.3.0]: https://github.com/resin-io/resin-token/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/resin-io/resin-token/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/resin-io/resin-token/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/resin-io/resin-token/compare/v1.3.0...v2.0.0

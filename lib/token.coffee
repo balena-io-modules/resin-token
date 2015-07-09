@@ -151,6 +151,25 @@ exports.parse = (token) ->
 			throw new errors.ResinMalformedToken(token)
 
 ###*
+# @summary Get the saved token data
+# @function
+# @public
+#
+# @description
+# In this context, "data" refers to the information encoded in the token.
+#
+# @returns {Promise<Object>} token data
+#
+# @example
+# token.getData().then (data) ->
+#		console.log(data)
+###
+exports.getData = ->
+	exports.has().then (hasToken) ->
+		return if not hasToken
+		exports.get().then(exports.parse)
+
+###*
 # @summary Get a property from a saved token
 # @function
 # @public
@@ -167,9 +186,8 @@ exports.parse = (token) ->
 #		console.log(username)
 ###
 exports.getProperty = (property) ->
-	exports.has().then (hasToken) ->
-		return if not hasToken
-		exports.get().then(exports.parse).get(property)
+	exports.getData().then (data) ->
+		return data?[property]
 
 ###*
 # @summary Get the username of the saved token

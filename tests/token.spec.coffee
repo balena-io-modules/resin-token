@@ -147,6 +147,25 @@ describe 'Token:', ->
 					it 'should reject the promise with an error message', ->
 						m.chai.expect(token.parse(@token)).to.be.rejectedWith("Malformed token: #{@token}")
 
+		describe '.getData()', ->
+
+			describe 'given a logged in user', ->
+
+				beforeEach (done) ->
+					@fixture = johnDoeFixture
+					token.set(@fixture.token).then(done)
+
+				it 'should return all the token data', ->
+					m.chai.expect(token.getData()).to.eventually.become(@fixture.data)
+
+			describe 'given not logged in user', ->
+
+				beforeEach (done) ->
+					token.remove().then(done)
+
+				it 'should eventually be undefined', ->
+					m.chai.expect(token.getData()).to.eventually.be.undefined
+
 		describe '.getProperty()', ->
 
 			describe 'given a logged in user', ->

@@ -184,6 +184,31 @@ exports.parse = function(token) {
 
 
 /**
+ * @summary Get the saved token data
+ * @function
+ * @public
+ *
+ * @description
+ * In this context, "data" refers to the information encoded in the token.
+ *
+ * @returns {Promise<Object>} token data
+ *
+ * @example
+ * token.getData().then (data) ->
+ *		console.log(data)
+ */
+
+exports.getData = function() {
+  return exports.has().then(function(hasToken) {
+    if (!hasToken) {
+      return;
+    }
+    return exports.get().then(exports.parse);
+  });
+};
+
+
+/**
  * @summary Get a property from a saved token
  * @function
  * @public
@@ -201,11 +226,8 @@ exports.parse = function(token) {
  */
 
 exports.getProperty = function(property) {
-  return exports.has().then(function(hasToken) {
-    if (!hasToken) {
-      return;
-    }
-    return exports.get().then(exports.parse).get(property);
+  return exports.getData().then(function(data) {
+    return data != null ? data[property] : void 0;
   });
 };
 

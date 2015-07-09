@@ -37,6 +37,7 @@ Documentation
   * [.has()](#module_token.has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
   * [.remove()](#module_token.remove) ⇒ <code>Promise</code>
   * [.parse(token)](#module_token.parse) ⇒ <code>Promise.&lt;Object&gt;</code>
+  * [.getData()](#module_token.getData) ⇒ <code>Promise.&lt;Object&gt;</code>
   * [.getProperty(property)](#module_token.getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
   * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
@@ -128,6 +129,19 @@ This function does't save the token. Use `token.set()` if you want to persist it
 ```js
 token.parse('...').then (parsedToken) ->
 		console.log(parsedToken)
+```
+<a name="module_token.getData"></a>
+### token.getData() ⇒ <code>Promise.&lt;Object&gt;</code>
+In this context, "data" refers to the information encoded in the token.
+
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get the saved token data  
+**Returns**: <code>Promise.&lt;Object&gt;</code> - token data  
+**Access:** public  
+**Example**  
+```js
+token.getData().then (data) ->
+		console.log(data)
 ```
 <a name="module_token.getProperty"></a>
 ### token.getProperty(property) ⇒ <code>Promise.&lt;\*&gt;</code>

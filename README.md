@@ -32,6 +32,7 @@ Documentation
 
 * [token](#module_token)
   * [.isValid(token)](#module_token.isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+  * [.isOutdated()](#module_token.isOutdated) ⇒ <code>Promise.&lt;Boolean&gt;</code>
   * [.set(token)](#module_token.set) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.get()](#module_token.get) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.has()](#module_token.has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
@@ -59,6 +60,17 @@ Documentation
 token.isValid('...').then (isValid) ->
 	if isValid
 		console.log('The token is valid!')
+```
+<a name="module_token.isOutdated"></a>
+### token.isOutdated() ⇒ <code>Promise.&lt;Boolean&gt;</code>
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Determine if a token should be updated  
+**Returns**: <code>Promise.&lt;Boolean&gt;</code> - token is outdated  
+**Access:** public  
+**Example**  
+```js
+token.isOutdated().then (isOutdated) ->
+	console.log(isOutdated)
 ```
 <a name="module_token.set"></a>
 ### token.set(token) ⇒ <code>Promise.&lt;String&gt;</code>

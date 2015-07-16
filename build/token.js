@@ -290,3 +290,28 @@ exports.getUserId = function() {
 exports.getEmail = function() {
   return exports.getProperty('email');
 };
+
+
+/**
+ * @summary Get the age of the saved token
+ * @function
+ * @public
+ *
+ * @description
+ * This function resolves to undefined if there is no token
+ *
+ * @returns {Promise<Number>} age in milliseconds
+ *
+ * @example
+ * token.getAge().then (age) ->
+ *		console.log(age)
+ */
+
+exports.getAge = function() {
+  return exports.getProperty('iat').then(function(iat) {
+    if (iat == null) {
+      return;
+    }
+    return Date.now() - (iat * 1000);
+  });
+};

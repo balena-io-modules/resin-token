@@ -2,6 +2,7 @@ Promise = require('bluebird')
 m = require('mochainon')
 nock = require('nock')
 settings = require('resin-settings-client')
+timekeeper = require('timekeeper')
 token = require('../lib/token')
 johnDoeFixture = require('./fixtures/tokens.json').johndoe
 
@@ -254,3 +255,53 @@ describe 'Token:', ->
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getEmail()).to.eventually.be.undefined
+
+		describe '.getAge()', ->
+
+			describe 'given a fixed current time', ->
+
+				beforeEach ->
+					@currentTime = 1500000000000
+					timekeeper.freeze(new Date(@currentTime))
+
+				afterEach ->
+					timekeeper.reset()
+
+				describe 'given the token was just issued', ->
+
+					beforeEach ->
+						@tokenGetDataStub = m.sinon.stub(token, 'getData')
+						@tokenGetDataStub.returns Promise.resolve
+							iat: @currentTime / 1000
+
+					afterEach ->
+						@tokenGetDataStub.restore()
+
+					it 'should eventually equal zero', ->
+						m.chai.expect(token.getAge()).to.eventually.equal(0)
+
+				describe 'given the token was issued an hour ago', ->
+
+					beforeEach ->
+						@tokenGetDataStub = m.sinon.stub(token, 'getData')
+						@tokenGetDataStub.returns Promise.resolve
+							iat: (@currentTime / 1000) - (60 * 60)
+
+					afterEach ->
+						@tokenGetDataStub.restore()
+
+					it 'should eventually equal one hour in milliseconds', ->
+						m.chai.expect(token.getAge()).to.eventually.equal(1 * 1000 * 60 * 60)
+
+				describe 'given no iat property', ->
+
+					beforeEach ->
+						@tokenGetDataStub = m.sinon.stub(token, 'getData')
+						@tokenGetDataStub.returns Promise.resolve
+							iat: undefined
+
+					afterEach ->
+						@tokenGetDataStub.restore()
+
+					it 'should eventually be undefined', ->
+						m.chai.expect(token.getAge()).to.eventually.be.undefined

@@ -42,6 +42,7 @@ Documentation
   * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
   * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
   * [.getEmail()](#module_token.getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
+  * [.getAge()](#module_token.getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
 
 <a name="module_token.isValid"></a>
 ### token.isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
@@ -201,6 +202,19 @@ This function resolves to undefined if there is no token
 ```js
 token.getEmail().then (email) ->
 		console.log(email)
+```
+<a name="module_token.getAge"></a>
+### token.getAge() ⇒ <code>Promise.&lt;Number&gt;</code>
+This function resolves to undefined if there is no token
+
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Get the age of the saved token  
+**Returns**: <code>Promise.&lt;Number&gt;</code> - age in milliseconds  
+**Access:** public  
+**Example**  
+```js
+token.getAge().then (age) ->
+		console.log(age)
 ```
 
 Support

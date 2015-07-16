@@ -2,6 +2,7 @@ Promise = require('bluebird')
 m = require('mochainon')
 nock = require('nock')
 settings = require('resin-settings-client')
+timekeeper = require('timekeeper')
 token = require('../lib/token')
 johnDoeFixture = require('./fixtures/tokens.json').johndoe
 
@@ -14,6 +15,59 @@ describe 'Token:', ->
 
 		it 'should become false if the token is invalid',  ->
 			m.chai.expect(token.isValid('hello')).to.eventually.be.false
+
+	describe '.isOutdated()', ->
+
+		describe 'given a fixed time', ->
+
+			beforeEach ->
+				@currentTime = 1500000000000
+				timekeeper.freeze(new Date(@currentTime))
+
+			afterEach ->
+				timekeeper.reset()
+
+			describe 'given the token was issued more than the validity time ago', ->
+
+				beforeEach ->
+					@tokenGetDataStub = m.sinon.stub(token, 'getData')
+					@tokenGetDataStub.returns Promise.resolve
+						iat: @currentTime - (settings.get('tokenValidityTime') + 1)
+
+				afterEach ->
+					@tokenGetDataStub.restore()
+
+				it 'should return true', ->
+					promise = token.isOutdated()
+					m.chai.expect(promise).to.eventually.be.true
+
+			describe 'given the token was issued exactly in the validity time ago', ->
+
+				beforeEach ->
+					@tokenGetDataStub = m.sinon.stub(token, 'getData')
+					@tokenGetDataStub.returns Promise.resolve
+						iat: @currentTime - settings.get('tokenValidityTime')
+
+				afterEach ->
+					@tokenGetDataStub.restore()
+
+				it 'should return true', ->
+					promise = token.isOutdated()
+					m.chai.expect(promise).to.eventually.be.true
+
+			describe 'given the token was issued less than the validity time ago', ->
+
+				beforeEach ->
+					@tokenGetDataStub = m.sinon.stub(token, 'getData')
+					@tokenGetDataStub.returns Promise.resolve
+						iat: @currentTime - settings.get('tokenValidityTime') / 2
+
+				afterEach ->
+					@tokenGetDataStub.restore()
+
+				it 'should return false', ->
+					promise = token.isOutdated()
+					m.chai.expect(promise).to.eventually.be.false
 
 	describe '.set()', ->
 

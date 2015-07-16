@@ -67,6 +67,30 @@ exports.isValid = function(token) {
 
 
 /**
+ * @summary Determine if a token should be updated
+ * @function
+ * @public
+ *
+ * @returns {Promise<Boolean>} token is outdated
+ *
+ * @example
+ * token.isOutdated().then (isOutdated) ->
+ * 	console.log(isOutdated)
+ */
+
+exports.isOutdated = function() {
+  return Promise.props({
+    issuedAt: exports.getProperty('iat').tap(function(iat) {
+      return iat * 1000;
+    }),
+    tokenValidityTime: settings.get('tokenValidityTime')
+  }).then(function(results) {
+    return Date.now() - results.issuedAt >= results.tokenValidityTime;
+  });
+};
+
+
+/**
  * @summary Set the token
  * @function
  * @public

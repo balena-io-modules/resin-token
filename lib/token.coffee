@@ -238,3 +238,25 @@ exports.getUserId = ->
 ###
 exports.getEmail = ->
 	return exports.getProperty('email')
+
+###*
+# @summary Get the age of the saved token
+# @function
+# @public
+#
+# @description
+# This function resolves to undefined if there is no token
+#
+# @returns {Promise<Number>} age in milliseconds
+#
+# @example
+# token.getAge().then (age) ->
+#		console.log(age)
+###
+exports.getAge = ->
+	exports.getProperty('iat').then (iat) ->
+		return if not iat?
+
+		# iat stands for "issued at", and represents a date in seconds,
+		# but we convert to milliseconds for consistency
+		return Date.now() - (iat * 1000)

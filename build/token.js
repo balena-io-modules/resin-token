@@ -172,8 +172,8 @@ exports.remove = function() {
 exports.parse = function(token) {
   return Promise["try"](function() {
     var data, header, signature, _ref;
-    token = token.trim();
     try {
+      token = token.trim();
       _ref = token.split('.'), header = _ref[0], data = _ref[1], signature = _ref[2];
       return JSON.parse(atob(data));
     } catch (_error) {

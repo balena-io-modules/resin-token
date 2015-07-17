@@ -15,6 +15,15 @@ describe 'Token:', ->
 		it 'should become false if the token is invalid',  ->
 			m.chai.expect(token.isValid('hello')).to.eventually.be.false
 
+		it 'should become false if the token is a number', ->
+			m.chai.expect(token.isValid(1234)).to.eventually.be.false
+
+		it 'should become false if the token is undefined', ->
+			m.chai.expect(token.isValid(undefined)).to.eventually.be.false
+
+		it 'should become false if the token is null', ->
+			m.chai.expect(token.isValid(null)).to.eventually.be.false
+
 	describe '.set()', ->
 
 		describe 'given an invalid token', ->

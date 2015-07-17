@@ -142,9 +142,8 @@ exports.remove = ->
 ###
 exports.parse = (token) ->
 	Promise.try ->
-		token = token.trim()
-
 		try
+			token = token.trim()
 			[ header, data, signature ] = token.split('.')
 			return JSON.parse(atob(data))
 		catch

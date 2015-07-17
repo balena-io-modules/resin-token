@@ -26,15 +26,13 @@ THE SOFTWARE.
 /**
  * @module token
  */
-var Promise, TOKEN_KEY, atob, errors, requestAsync, settings, storage, url;
+var Promise, TOKEN_KEY, atob, errors, settings, storage, url;
 
 Promise = require('bluebird');
 
 atob = require('atob');
 
 url = require('url');
-
-requestAsync = Promise.promisify(require('request'));
 
 errors = require('resin-errors');
 

@@ -29,7 +29,6 @@ THE SOFTWARE.
 Promise = require('bluebird')
 atob = require('atob')
 url = require('url')
-requestAsync = Promise.promisify(require('request'))
 errors = require('resin-errors')
 settings = require('resin-settings-client')
 storage = require('./storage')

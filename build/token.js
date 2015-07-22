@@ -26,7 +26,7 @@ THE SOFTWARE.
 /**
  * @module token
  */
-var Promise, TOKEN_KEY, atob, errors, settings, storage, url;
+var Promise, TOKEN_KEY, atob, errors, storage, url;
 
 Promise = require('bluebird');
 
@@ -35,8 +35,6 @@ atob = require('atob');
 url = require('url');
 
 errors = require('resin-errors');
-
-settings = require('resin-settings-client');
 
 storage = require('./storage');
 

@@ -30,7 +30,6 @@ Promise = require('bluebird')
 atob = require('atob')
 url = require('url')
 errors = require('resin-errors')
-settings = require('resin-settings-client')
 storage = require('./storage')
 
 TOKEN_KEY = 'token'

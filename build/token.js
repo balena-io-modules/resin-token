@@ -104,6 +104,8 @@ exports.set = function(token) {
 exports.get = function() {
   return Promise["try"](function() {
     return storage.getItem(TOKEN_KEY) || void 0;
+  })["catch"](function() {
+    return void 0;
   });
 };
 

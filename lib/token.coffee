@@ -89,6 +89,12 @@ exports.get = ->
 	Promise.try ->
 		return storage.getItem(TOKEN_KEY) or undefined
 
+	# storage.getItem() throws a ENOENT error in NodeJS
+	# if the token key file doesn't exist.
+	# In this context, it means that there is no token.
+	.catch ->
+		return undefined
+
 ###*
 # @summary Has a token
 # @function

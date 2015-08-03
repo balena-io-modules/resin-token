@@ -4,6 +4,7 @@ nock = require('nock')
 settings = require('resin-settings-client')
 timekeeper = require('timekeeper')
 token = require('../lib/token')
+storage = require('../lib/storage')
 johnDoeFixture = require('./fixtures/tokens.json').johndoe
 
 describe 'Token:', ->
@@ -102,6 +103,18 @@ describe 'Token:', ->
 
 				it 'should eventually return the token', ->
 					m.chai.expect(token.get()).to.eventually.equal('1234')
+
+			describe 'given node-localstorage throws an error when reading the file', ->
+
+				beforeEach ->
+					@storageGetItemStub = m.sinon.stub(storage, 'getItem')
+					@storageGetItemStub.throws(new Error('file error'))
+
+				afterEach ->
+					@storageGetItemStub.restore()
+
+				it 'should eventually be undefined', ->
+					m.chai.expect(token.get()).to.eventually.be.undefined
 
 		describe '.has()', ->
 

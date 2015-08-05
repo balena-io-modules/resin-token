@@ -40,7 +40,7 @@
     "atob": "^1.1.2",
     "bluebird": "^2.9.30",
     "node-localstorage": "^0.5.0",
-    "resin-errors": "^1.0.1",
+    "resin-errors": "^2.0.0",
     "resin-settings-client": "^2.0.0"
   }
 }

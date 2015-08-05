@@ -1,7 +1,5 @@
 Promise = require('bluebird')
 m = require('mochainon')
-nock = require('nock')
-settings = require('resin-settings-client')
 timekeeper = require('timekeeper')
 token = require('../lib/token')
 johnDoeFixture = require('./fixtures/tokens.json').johndoe
@@ -17,7 +15,7 @@ describe 'Token:', ->
 			m.chai.expect(token.isValid('hello')).to.eventually.be.false
 
 		it 'should become false if the token is a number', ->
-			m.chai.expect(token.isValid(1234)).to.eventually.be.false
+			m.chai.expect(token.isValid('1234asdf')).to.eventually.be.false
 
 		it 'should become false if the token is undefined', ->
 			m.chai.expect(token.isValid(undefined)).to.eventually.be.false
@@ -55,25 +53,25 @@ describe 'Token:', ->
 
 				it 'should set the token', (done) ->
 					m.chai.expect(token.get()).to.eventually.be.undefined
-					token.set('1234').then ->
-						m.chai.expect(token.get()).to.eventually.equal('1234')
+					token.set('1234asdf').then ->
+						m.chai.expect(token.get()).to.eventually.equal('1234asdf')
 						done()
 
 				it 'should trim the token', (done) ->
 					m.chai.expect(token.get()).to.eventually.be.undefined
-					token.set('   1234    ').then ->
-						m.chai.expect(token.get()).to.eventually.equal('1234')
+					token.set('   1234asdf    ').then ->
+						m.chai.expect(token.get()).to.eventually.equal('1234asdf')
 						done()
 
 			describe 'given a token', ->
 
 				beforeEach (done) ->
-					token.set('1234').then(done)
+					token.set('1234asdf').then(done)
 
 				it 'should be able to replace the token', (done) ->
-					m.chai.expect(token.get()).to.eventually.equal('1234')
-					token.set('5678').then ->
-						m.chai.expect(token.get()).to.eventually.equal('5678')
+					m.chai.expect(token.get()).to.eventually.equal('1234asdf')
+					token.set('5678asdf').then ->
+						m.chai.expect(token.get()).to.eventually.equal('5678asdf')
 						done()
 
 	describe 'given any token is valid', ->
@@ -98,10 +96,10 @@ describe 'Token:', ->
 			describe 'given a token', ->
 
 				beforeEach (done) ->
-					token.set('1234').then(done)
+					token.set('1234asdf').then(done)
 
 				it 'should eventually return the token', ->
-					m.chai.expect(token.get()).to.eventually.equal('1234')
+					m.chai.expect(token.get()).to.eventually.equal('1234asdf')
 
 		describe '.has()', ->
 
@@ -116,7 +114,7 @@ describe 'Token:', ->
 			describe 'given a token', ->
 
 				beforeEach (done) ->
-					token.set('1234').then(done)
+					token.set('1234asdf').then(done)
 
 				it 'should eventually be true', ->
 					m.chai.expect(token.has()).to.eventually.be.true
@@ -126,7 +124,7 @@ describe 'Token:', ->
 			describe 'given a token', ->
 
 				beforeEach (done) ->
-					token.set('1234').then(done)
+					token.set('1234asdf').then(done)
 
 				it 'should remove the token', (done) ->
 					m.chai.expect(token.has()).to.eventually.be.true
@@ -152,7 +150,7 @@ describe 'Token:', ->
 				describe 'given a non base64 data', ->
 
 					beforeEach ->
-						@token = '1234.asdf.5678'
+						@token = '1234asdf.asdf.5678'
 
 					it 'should reject the promise with an error message', ->
 						m.chai.expect(token.parse(@token)).to.be.rejectedWith("Malformed token: #{@token}")

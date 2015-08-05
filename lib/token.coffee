@@ -30,7 +30,7 @@ Promise = require('bluebird')
 atob = require('atob')
 url = require('url')
 errors = require('resin-errors')
-storage = require('./storage')
+storage = require('resin-settings-storage')
 
 TOKEN_KEY = 'token'
 
@@ -68,7 +68,7 @@ exports.set = (token) ->
 	exports.isValid(token).then (isValid) ->
 		if not isValid
 			throw new Error('The token is invalid')
-		return storage.setItem(TOKEN_KEY, token.trim())
+		return storage.set(TOKEN_KEY, token.trim())
 
 ###*
 # @summary Get the token
@@ -85,8 +85,7 @@ exports.set = (token) ->
 #		console.log(sessionToken)
 ###
 exports.get = ->
-	Promise.try ->
-		return storage.getItem(TOKEN_KEY) or undefined
+	return storage.get(TOKEN_KEY)
 
 ###*
 # @summary Has a token
@@ -103,8 +102,7 @@ exports.get = ->
 #			console.log('There is not a token!')
 ###
 exports.has = ->
-	exports.get().then (token) ->
-		return token?
+	return storage.has(TOKEN_KEY)
 
 ###*
 # @summary Remove the token
@@ -120,8 +118,7 @@ exports.has = ->
 # token.remove()
 ###
 exports.remove = ->
-	Promise.try ->
-		return storage.removeItem(TOKEN_KEY)
+	return storage.remove(TOKEN_KEY)
 
 ###*
 # @summary Parse a token

@@ -33,14 +33,12 @@
     "jsdoc-to-markdown": "^1.1.1",
     "mocha": "~2.0.1",
     "mochainon": "^1.0.0",
-    "nock": "^2.6.0",
     "timekeeper": "0.0.5"
   },
   "dependencies": {
     "atob": "^1.1.2",
     "bluebird": "^2.9.30",
-    "node-localstorage": "^0.5.0",
     "resin-errors": "^2.0.0",
-    "resin-settings-client": "^2.0.0"
+    "resin-settings-storage": "^1.0.0"
   }
 }

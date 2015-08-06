@@ -36,7 +36,7 @@ url = require('url');
 
 errors = require('resin-errors');
 
-storage = require('./storage');
+storage = require('resin-settings-storage');
 
 TOKEN_KEY = 'token';
 
@@ -79,7 +79,7 @@ exports.set = function(token) {
     if (!isValid) {
       throw new Error('The token is invalid');
     }
-    return storage.setItem(TOKEN_KEY, token.trim());
+    return storage.set(TOKEN_KEY, token.trim());
   });
 };
 
@@ -100,9 +100,7 @@ exports.set = function(token) {
  */
 
 exports.get = function() {
-  return Promise["try"](function() {
-    return storage.getItem(TOKEN_KEY) || void 0;
-  });
+  return storage.get(TOKEN_KEY);
 };
 
 
@@ -122,9 +120,7 @@ exports.get = function() {
  */
 
 exports.has = function() {
-  return exports.get().then(function(token) {
-    return token != null;
-  });
+  return storage.has(TOKEN_KEY);
 };
 
 
@@ -143,9 +139,7 @@ exports.has = function() {
  */
 
 exports.remove = function() {
-  return Promise["try"](function() {
-    return storage.removeItem(TOKEN_KEY);
-  });
+  return storage.remove(TOKEN_KEY);
 };
 
 

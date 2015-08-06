@@ -1,6 +1,6 @@
 {
   "name": "resin-token",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Resin.io session token utilities",
   "main": "build/token.js",
   "homepage": "https://github.com/resin-io/resin-token",

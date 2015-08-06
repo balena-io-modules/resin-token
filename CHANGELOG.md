@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.1] - 2015-08-06
+
+### Added
+
+- Run tests in Node v0.12 and iojs v2.5.0.
+
+### Changed
+
+- Make use of `resin-settings-storage` to persist/access the token.
+
 ## [2.4.0] - 2015-07-16
 
 ### Added
@@ -64,6 +74,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `token.parse()`.
 - Implement `token.getUsername()`.
 
+[2.4.1]: https://github.com/resin-io/resin-token/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/resin-io/resin-token/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/resin-io/resin-token/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/resin-io/resin-token/compare/v2.1.0...v2.2.0

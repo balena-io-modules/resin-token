@@ -101,6 +101,33 @@ describe 'Token:', ->
 				it 'should eventually return the token', ->
 					m.chai.expect(token.get()).to.eventually.equal('1234asdf')
 
+			describe 'given an environment variable token', ->
+
+				beforeEach (done) ->
+					token.remove().then ->
+						process.env.RESIN_TOKEN = '1234asdf'
+					.nodeify(done)
+
+				afterEach ->
+					delete process.env.RESIN_TOKEN
+
+				it 'should eventually return the token', ->
+					m.chai.expect(token.get()).to.eventually.equal('1234asdf')
+
+			describe 'given an environment variable token and a saved token', ->
+
+				beforeEach (done) ->
+					token.remove().then ->
+						process.env.RESIN_TOKEN = '5678asdf'
+						token.set('1234asdf')
+					.nodeify(done)
+
+				afterEach ->
+					delete process.env.RESIN_TOKEN
+
+				it 'should give precedence to the environment variable', ->
+					m.chai.expect(token.get()).to.eventually.equal('5678asdf')
+
 		describe '.has()', ->
 
 			describe 'given no token', ->
@@ -119,12 +146,58 @@ describe 'Token:', ->
 				it 'should eventually be true', ->
 					m.chai.expect(token.has()).to.eventually.be.true
 
+			describe 'given an environment variable token', ->
+
+				beforeEach (done) ->
+					token.remove().then ->
+						process.env.RESIN_TOKEN = '1234asdf'
+					.nodeify(done)
+
+				afterEach ->
+					delete process.env.RESIN_TOKEN
+
+				it 'should eventually be true', ->
+					m.chai.expect(token.has()).to.eventually.be.true
+
 		describe '.remove()', ->
 
 			describe 'given a token', ->
 
 				beforeEach (done) ->
 					token.set('1234asdf').then(done)
+
+				it 'should remove the token', (done) ->
+					m.chai.expect(token.has()).to.eventually.be.true
+					token.remove().then ->
+						m.chai.expect(token.has()).to.eventually.be.false
+						done()
+
+			describe 'given an environment variable token', ->
+
+				beforeEach (done) ->
+					token.remove().then ->
+						process.env.RESIN_TOKEN = '1234asdf'
+					.nodeify(done)
+
+				afterEach ->
+					delete process.env.RESIN_TOKEN
+
+				it 'should remove the token', (done) ->
+					m.chai.expect(token.has()).to.eventually.be.true
+					token.remove().then ->
+						m.chai.expect(token.has()).to.eventually.be.false
+						done()
+
+			describe 'given an environment variable token and a saved token', ->
+
+				beforeEach (done) ->
+					token.remove().then ->
+						process.env.RESIN_TOKEN = '5678asdf'
+						token.set('1234asdf')
+					.nodeify(done)
+
+				afterEach ->
+					delete process.env.RESIN_TOKEN
 
 				it 'should remove the token', (done) ->
 					m.chai.expect(token.has()).to.eventually.be.true
@@ -162,6 +235,20 @@ describe 'Token:', ->
 				beforeEach (done) ->
 					@fixture = johnDoeFixture
 					token.set(@fixture.token).then(done)
+
+				it 'should return all the token data', ->
+					m.chai.expect(token.getData()).to.eventually.become(@fixture.data)
+
+			describe 'given an environment variable token', ->
+
+				beforeEach (done) ->
+					@fixture = johnDoeFixture
+					token.remove().then =>
+						process.env.RESIN_TOKEN = @fixture.token
+					.nodeify(done)
+
+				afterEach ->
+					delete process.env.RESIN_TOKEN
 
 				it 'should return all the token data', ->
 					m.chai.expect(token.getData()).to.eventually.become(@fixture.data)

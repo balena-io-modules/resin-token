@@ -92,6 +92,8 @@ exports.set = function(token) {
  * @description
  * This function resolved to undefined if no token.
  *
+ * This function attemps to also read the token from a `RESIN_TOKEN` environment variable.
+ *
  * @returns {Promise<String>} token
  *
  * @example
@@ -100,7 +102,9 @@ exports.set = function(token) {
  */
 
 exports.get = function() {
-  return storage.get(TOKEN_KEY);
+  return Promise["try"](function() {
+    return process.env.RESIN_TOKEN || storage.get(TOKEN_KEY);
+  });
 };
 
 
@@ -120,7 +124,9 @@ exports.get = function() {
  */
 
 exports.has = function() {
-  return storage.has(TOKEN_KEY);
+  return exports.get().then(function(savedToken) {
+    return savedToken != null;
+  });
 };
 
 
@@ -139,6 +145,7 @@ exports.has = function() {
  */
 
 exports.remove = function() {
+  delete process.env.RESIN_TOKEN;
   return storage.remove(TOKEN_KEY);
 };
 

@@ -80,6 +80,8 @@ token.set('...')
 ### token.get() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolved to undefined if no token.
 
+This function attemps to also read the token from a `RESIN_TOKEN` environment variable.
+
 **Kind**: static method of <code>[token](#module_token)</code>  
 **Summary**: Get the token  
 **Returns**: <code>Promise.&lt;String&gt;</code> - token  

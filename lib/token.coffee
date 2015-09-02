@@ -78,6 +78,8 @@ exports.set = (token) ->
 # @description
 # This function resolved to undefined if no token.
 #
+# This function attemps to also read the token from a `RESIN_TOKEN` environment variable.
+#
 # @returns {Promise<String>} token
 #
 # @example
@@ -85,7 +87,8 @@ exports.set = (token) ->
 #		console.log(sessionToken)
 ###
 exports.get = ->
-	return storage.get(TOKEN_KEY)
+	Promise.try ->
+		return process.env.RESIN_TOKEN or storage.get(TOKEN_KEY)
 
 ###*
 # @summary Has a token
@@ -102,7 +105,8 @@ exports.get = ->
 #			console.log('There is not a token!')
 ###
 exports.has = ->
-	return storage.has(TOKEN_KEY)
+	exports.get().then (savedToken) ->
+		return savedToken?
 
 ###*
 # @summary Remove the token
@@ -118,6 +122,7 @@ exports.has = ->
 # token.remove()
 ###
 exports.remove = ->
+	delete process.env.RESIN_TOKEN
 	return storage.remove(TOKEN_KEY)
 
 ###*

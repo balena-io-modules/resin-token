@@ -39,6 +39,6 @@
     "atob": "^1.1.2",
     "bluebird": "^2.9.30",
     "resin-errors": "^2.0.0",
-    "resin-settings-storage": "^1.0.0"
+    "resin-settings-storage": "^1.0.1"
   }
 }

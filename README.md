@@ -6,6 +6,8 @@ resin-token
 [![Build Status](https://travis-ci.org/resin-io/resin-token.svg?branch=master)](https://travis-ci.org/resin-io/resin-token)
 [![Build status](https://ci.appveyor.com/api/projects/status/i01h2qi3raf0acm7?svg=true)](https://ci.appveyor.com/project/jviotti/resin-token)
 
+Join our online chat at [![Gitter chat](https://badges.gitter.im/resin-io/chat.png)](https://gitter.im/resin-io/chat)
+
 Resin.io session token utilities.
 
 Role

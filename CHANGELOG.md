@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed
+
+- Upgrade `resin-settings-storage` to v1.1.0.
+- Run tests in the browser
+- Update node versions in Travis and AppVeyor
+
+
 ## [2.4.2] - 2015-09-07
 
 ### Changed

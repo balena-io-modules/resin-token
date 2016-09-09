@@ -33,20 +33,21 @@ Documentation
 
 
 * [token](#module_token)
-  * [.isValid(token)](#module_token.isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-  * [.set(token)](#module_token.set) ⇒ <code>Promise.&lt;String&gt;</code>
-  * [.get()](#module_token.get) ⇒ <code>Promise.&lt;String&gt;</code>
-  * [.has()](#module_token.has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-  * [.remove()](#module_token.remove) ⇒ <code>Promise</code>
-  * [.parse(token)](#module_token.parse) ⇒ <code>Promise.&lt;Object&gt;</code>
-  * [.getData()](#module_token.getData) ⇒ <code>Promise.&lt;Object&gt;</code>
-  * [.getProperty(property)](#module_token.getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
-  * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
-  * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
-  * [.getEmail()](#module_token.getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
-  * [.getAge()](#module_token.getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
+    * [.isValid(token)](#module_token.isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+    * [.set(token)](#module_token.set) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.get()](#module_token.get) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.has()](#module_token.has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+    * [.remove()](#module_token.remove) ⇒ <code>Promise</code>
+    * [.parse(token)](#module_token.parse) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.getData()](#module_token.getData) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [.getProperty(property)](#module_token.getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [.getUsername()](#module_token.getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
+    * [.getEmail()](#module_token.getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.getAge()](#module_token.getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
 
 <a name="module_token.isValid"></a>
+
 ### token.isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
 **Kind**: static method of <code>[token](#module_token)</code>  
 **Summary**: Check if a token is valid  
@@ -64,6 +65,7 @@ token.isValid('...').then (isValid) ->
 		console.log('The token is valid!')
 ```
 <a name="module_token.set"></a>
+
 ### token.set(token) ⇒ <code>Promise.&lt;String&gt;</code>
 **Kind**: static method of <code>[token](#module_token)</code>  
 **Summary**: Set the token  
@@ -79,6 +81,7 @@ token.isValid('...').then (isValid) ->
 token.set('...')
 ```
 <a name="module_token.get"></a>
+
 ### token.get() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolved to undefined if no token.
 
@@ -92,6 +95,7 @@ token.get().then (sessionToken) ->
 		console.log(sessionToken)
 ```
 <a name="module_token.has"></a>
+
 ### token.has() ⇒ <code>Promise.&lt;Boolean&gt;</code>
 **Kind**: static method of <code>[token](#module_token)</code>  
 **Summary**: Has a token  
@@ -106,6 +110,7 @@ token.has().then (hasToken) ->
 			console.log('There is not a token!')
 ```
 <a name="module_token.remove"></a>
+
 ### token.remove() ⇒ <code>Promise</code>
 This promise is not rejected if there was no token at the time of removal.
 
@@ -117,6 +122,7 @@ This promise is not rejected if there was no token at the time of removal.
 token.remove()
 ```
 <a name="module_token.parse"></a>
+
 ### token.parse(token) ⇒ <code>Promise.&lt;Object&gt;</code>
 This function does't save the token. Use `token.set()` if you want to persist it afterwards.
 
@@ -135,6 +141,7 @@ token.parse('...').then (parsedToken) ->
 		console.log(parsedToken)
 ```
 <a name="module_token.getData"></a>
+
 ### token.getData() ⇒ <code>Promise.&lt;Object&gt;</code>
 In this context, "data" refers to the information encoded in the token.
 
@@ -148,6 +155,7 @@ token.getData().then (data) ->
 		console.log(data)
 ```
 <a name="module_token.getProperty"></a>
+
 ### token.getProperty(property) ⇒ <code>Promise.&lt;\*&gt;</code>
 This function resolves to undefined for any property name if there is no token.
 It also resolved to undefined if the property name is invalid.
@@ -167,6 +175,7 @@ token.getProperty('username').then (username) ->
 		console.log(username)
 ```
 <a name="module_token.getUsername"></a>
+
 ### token.getUsername() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolves to undefined if there is no token
 
@@ -180,6 +189,7 @@ token.getUsername().then (username) ->
 		console.log(username)
 ```
 <a name="module_token.getUserId"></a>
+
 ### token.getUserId() ⇒ <code>Promise.&lt;Number&gt;</code>
 This function resolves to undefined if there is no token
 
@@ -193,6 +203,7 @@ token.getUserId().then (userId) ->
 		console.log(userId)
 ```
 <a name="module_token.getEmail"></a>
+
 ### token.getEmail() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolves to undefined if there is no token
 
@@ -206,6 +217,7 @@ token.getEmail().then (email) ->
 		console.log(email)
 ```
 <a name="module_token.getAge"></a>
+
 ### token.getAge() ⇒ <code>Promise.&lt;Number&gt;</code>
 This function resolves to undefined if there is no token
 
@@ -230,7 +242,7 @@ Tests
 Run the test suite by doing:
 
 ```sh
-$ gulp test
+$ npm test
 ```
 
 Contribute

@@ -3,12 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.4.3] - 2016-09-12
+
 ### Changed
 
 - Upgrade `resin-settings-storage` to v1.1.0.
 - Run tests in the browser
 - Update node versions in Travis and AppVeyor
-
 
 ## [2.4.2] - 2015-09-07
 
@@ -87,6 +88,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `token.parse()`.
 - Implement `token.getUsername()`.
 
+[2.4.3]: https://github.com/resin-io/resin-token/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/resin-io/resin-token/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/resin-io/resin-token/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/resin-io/resin-token/compare/v2.3.0...v2.4.0

@@ -153,12 +153,12 @@ exports.remove = function() {
 
 exports.parse = function(token) {
   return Promise["try"](function() {
-    var data, header, signature, _ref;
+    var data, error, header, ref, signature;
     try {
       token = token.trim();
-      _ref = token.split('.'), header = _ref[0], data = _ref[1], signature = _ref[2];
+      ref = token.split('.'), header = ref[0], data = ref[1], signature = ref[2];
       return JSON.parse(atob(data));
-    } catch (_error) {
+    } catch (error) {
       throw new errors.ResinMalformedToken(token);
     }
   });

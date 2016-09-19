@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed
+
+- **Breaking!** Switch to factory pattern in order to make it work with the new resin-settings-storage
+
 ## [2.4.3] - 2016-09-12
 
 ### Changed

@@ -31,6 +31,22 @@ $ npm install --save resin-token
 Documentation
 -------------
 
+The module returns a _factory function_ that you use to get an instance of the token module.
+
+It accepts the following params:
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>Object</code> | options |
+| options.dataDirectory | <code>string</code> | the directory to use for storage in Node.js. Ignored in the browser. |
+
+**Example**
+```js
+var token = require('resin-token')({
+	dataDirectory: '/opt/cache/resin'
+})
+```
+
 
 * [token](#module_token)
     * [.isValid(token)](#module_token.isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
@@ -254,7 +270,7 @@ Contribute
 Before submitting a PR, please make sure that you include tests, and that [coffeelint](http://www.coffeelint.org/) runs without any warning:
 
 ```sh
-$ gulp lint
+$ npm run lint
 ```
 
 License

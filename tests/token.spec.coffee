@@ -1,8 +1,17 @@
 Promise = require('bluebird')
 m = require('mochainon')
 timekeeper = require('timekeeper')
-token = require('../lib/token')
+getToken = require('../lib/token')
 johnDoeFixture = require('./fixtures/tokens.json').johndoe
+
+IS_BROWSER = window?
+
+dataDirectory = null
+if not IS_BROWSER
+	settings = require('resin-settings-client')
+	dataDirectory = settings.get('dataDirectory')
+
+token = getToken({ dataDirectory })
 
 describe 'Token:', ->
 
@@ -48,31 +57,28 @@ describe 'Token:', ->
 
 			describe 'given no token', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
-				it 'should set the token', (done) ->
+				it 'should set the token', ->
 					m.chai.expect(token.get()).to.eventually.be.undefined
 					token.set('1234asdf').then ->
 						m.chai.expect(token.get()).to.eventually.equal('1234asdf')
-						done()
 
-				it 'should trim the token', (done) ->
+				it 'should trim the token', ->
 					m.chai.expect(token.get()).to.eventually.be.undefined
 					token.set('   1234asdf    ').then ->
 						m.chai.expect(token.get()).to.eventually.equal('1234asdf')
-						done()
 
 			describe 'given a token', ->
 
-				beforeEach (done) ->
-					token.set('1234asdf').then(done)
+				beforeEach ->
+					token.set('1234asdf')
 
-				it 'should be able to replace the token', (done) ->
+				it 'should be able to replace the token', ->
 					m.chai.expect(token.get()).to.eventually.equal('1234asdf')
 					token.set('5678asdf').then ->
 						m.chai.expect(token.get()).to.eventually.equal('5678asdf')
-						done()
 
 	describe 'given any token is valid', ->
 
@@ -87,16 +93,16 @@ describe 'Token:', ->
 
 			describe 'given no token', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.get()).to.eventually.be.undefined
 
 			describe 'given a token', ->
 
-				beforeEach (done) ->
-					token.set('1234asdf').then(done)
+				beforeEach ->
+					token.set('1234asdf')
 
 				it 'should eventually return the token', ->
 					m.chai.expect(token.get()).to.eventually.equal('1234asdf')
@@ -105,16 +111,16 @@ describe 'Token:', ->
 
 			describe 'given no token', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be false', ->
 					m.chai.expect(token.has()).to.eventually.be.false
 
 			describe 'given a token', ->
 
-				beforeEach (done) ->
-					token.set('1234asdf').then(done)
+				beforeEach ->
+					token.set('1234asdf')
 
 				it 'should eventually be true', ->
 					m.chai.expect(token.has()).to.eventually.be.true
@@ -123,14 +129,13 @@ describe 'Token:', ->
 
 			describe 'given a token', ->
 
-				beforeEach (done) ->
-					token.set('1234asdf').then(done)
+				beforeEach ->
+					token.set('1234asdf')
 
-				it 'should remove the token', (done) ->
+				it 'should remove the token', ->
 					m.chai.expect(token.has()).to.eventually.be.true
 					token.remove().then ->
 						m.chai.expect(token.has()).to.eventually.be.false
-						done()
 
 		describe '.parse()', ->
 
@@ -139,11 +144,10 @@ describe 'Token:', ->
 				beforeEach ->
 					@fixture = johnDoeFixture
 
-				it 'should parse the token', (done) ->
+				it 'should parse the token', ->
 					token.parse(@fixture.token).then (result) =>
 						m.chai.expect(result.email).to.equal(@fixture.data.email)
 						m.chai.expect(result.username).to.equal(@fixture.data.username)
-						done()
 
 			describe 'given an invalid token', ->
 
@@ -159,17 +163,17 @@ describe 'Token:', ->
 
 			describe 'given a logged in user', ->
 
-				beforeEach (done) ->
+				beforeEach ->
 					@fixture = johnDoeFixture
-					token.set(@fixture.token).then(done)
+					token.set(@fixture.token)
 
 				it 'should return all the token data', ->
 					m.chai.expect(token.getData()).to.eventually.become(@fixture.data)
 
 			describe 'given not logged in user', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getData()).to.eventually.be.undefined
@@ -178,9 +182,9 @@ describe 'Token:', ->
 
 			describe 'given a logged in user', ->
 
-				beforeEach (done) ->
+				beforeEach ->
 					@fixture = johnDoeFixture
-					token.set(@fixture.token).then(done)
+					token.set(@fixture.token)
 
 				describe 'given the property exists', ->
 
@@ -194,8 +198,8 @@ describe 'Token:', ->
 
 			describe 'given not logged in user', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getProperty('username')).to.eventually.be.undefined
@@ -204,17 +208,17 @@ describe 'Token:', ->
 
 			describe 'given a logged in user', ->
 
-				beforeEach (done) ->
+				beforeEach ->
 					@fixture = johnDoeFixture
-					token.set(@fixture.token).then(done)
+					token.set(@fixture.token)
 
 				it 'should eventually be the correct username', ->
 					m.chai.expect(token.getUsername()).to.eventually.equal(@fixture.data.username)
 
 			describe 'given not logged in user', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getUsername()).to.eventually.be.undefined
@@ -223,9 +227,9 @@ describe 'Token:', ->
 
 			describe 'given a logged in user', ->
 
-				beforeEach (done) ->
+				beforeEach ->
 					@fixture = johnDoeFixture
-					token.set(@fixture.token).then(done)
+					token.set(@fixture.token)
 
 				it 'should eventually be a number', ->
 					m.chai.expect(token.getUserId()).to.eventually.be.a('number')
@@ -235,8 +239,8 @@ describe 'Token:', ->
 
 			describe 'given not logged in user', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getUserId()).to.eventually.be.undefined
@@ -245,9 +249,9 @@ describe 'Token:', ->
 
 			describe 'given a logged in user', ->
 
-				beforeEach (done) ->
+				beforeEach ->
 					@fixture = johnDoeFixture
-					token.set(@fixture.token).then(done)
+					token.set(@fixture.token)
 
 				it 'should eventually be a string', ->
 					m.chai.expect(token.getEmail()).to.eventually.be.a('string')
@@ -257,8 +261,8 @@ describe 'Token:', ->
 
 			describe 'given not logged in user', ->
 
-				beforeEach (done) ->
-					token.remove().then(done)
+				beforeEach ->
+					token.remove()
 
 				it 'should eventually be undefined', ->
 					m.chai.expect(token.getEmail()).to.eventually.be.undefined

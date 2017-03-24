@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed
+
+- **Breaking!** Upgraded resin-settings-storage. This changes the token's localStorage key in browsers to `resin-token`. This will lose all existing tokens.
+
 ## [3.0.0] - 2016-11-18
 
 ### Changed

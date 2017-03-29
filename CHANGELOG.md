@@ -3,9 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.0.0] - 2017-03-29
+
 ### Changed
 
-- **Breaking!** Upgraded resin-settings-storage. This changes the token's localStorage key in browsers to `resin-token`. This will lose all existing tokens.
+- **Breaking!** Upgraded resin-settings-storage. This changes the token's localStorage key in browsers to `resin-token`. This will lose all existing browser tokens.
 
 ## [3.0.0] - 2016-11-18
 
@@ -98,6 +100,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `token.parse()`.
 - Implement `token.getUsername()`.
 
+[4.0.0]: https://github.com/resin-io/resin-token/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/resin-io/resin-token/compare/v2.4.3...v3.0.0
 [2.4.3]: https://github.com/resin-io/resin-token/compare/v2.4.2...v2.4.3
 [2.4.2]: https://github.com/resin-io/resin-token/compare/v2.4.1...v2.4.2

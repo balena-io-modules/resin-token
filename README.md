@@ -61,6 +61,7 @@ var token = require('resin-token')({
     * [.getUserId()](#module_token.getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
     * [.getEmail()](#module_token.getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.getAge()](#module_token.getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
+    * [.isExpired()](#module_token.isExpired) ⇒
 
 <a name="module_token.isValid"></a>
 
@@ -245,6 +246,18 @@ This function resolves to undefined if there is no token
 ```js
 token.getAge().then (age) ->
 		console.log(age)
+```
+<a name="module_token.isExpired"></a>
+
+### token.isExpired() ⇒
+**Kind**: static method of <code>[token](#module_token)</code>  
+**Summary**: Check if the given token has expired  
+**Returns**: {Promise<boolean>  
+**Access:** public  
+**Example**  
+```js
+token.isExpired(jwtToken).then (isExpired) ->
+		console.log(isExpired)
 ```
 
 Support

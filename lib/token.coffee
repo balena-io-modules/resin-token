@@ -65,9 +65,15 @@ module.exports = getToken = ({ dataDirectory = null } = {}) ->
 	# token.set('...')
 	###
 	exports.set = (token) ->
-		exports.isValid(token).then (isValid) ->
+		exports.isValid(token)
+		.then (isValid) ->
 			if not isValid
 				throw new Error('The token is invalid')
+		.then ->
+			exports.isExpired(token)
+		.then (isExpired) ->
+			if isExpired
+				throw new Error('The token has expired')
 			return storage.set(TOKEN_KEY, token.trim())
 
 	###*
@@ -254,5 +260,22 @@ module.exports = getToken = ({ dataDirectory = null } = {}) ->
 			# but we convert to milliseconds for consistency
 			return Date.now() - (iat * 1000)
 
+	###*
+	# @summary Check if the given token has expired
+	# @function
+	# @public
+	#
+	# @returns {Promise<boolean>
+	#
+	# @example
+	# token.isExpired(jwtToken).then (isExpired) ->
+	#		console.log(isExpired)
+	###
+	exports.isExpired = (token) ->
+		exports.parse(token).get('exp').then (exp) ->
+			return false if not exp?
+
+			# exp stands for "expires", and represents a date in seconds
+			return Date.now() > exp * 1000
 
 	return exports

@@ -2,7 +2,9 @@ Promise = require('bluebird')
 m = require('mochainon')
 timekeeper = require('timekeeper')
 getToken = require('../lib/token')
-johnDoeFixture = require('./fixtures/tokens.json').johndoe
+fixtures = require('./fixtures/tokens')
+johnDoeFixture = fixtures.johndoe
+expiredTokenFixture = fixtures.expired
 
 IS_BROWSER = window?
 
@@ -51,9 +53,12 @@ describe 'Token:', ->
 			beforeEach ->
 				@tokenIsValidStub = m.sinon.stub(token, 'isValid')
 				@tokenIsValidStub.returns(Promise.resolve(true))
+				@tokenIsExpiredStub = m.sinon.stub(token, 'isExpired')
+				@tokenIsExpiredStub.returns(Promise.resolve(false))
 
 			afterEach ->
 				@tokenIsValidStub.restore()
+				@tokenIsExpiredStub.restore()
 
 			describe 'given no token', ->
 
@@ -85,9 +90,12 @@ describe 'Token:', ->
 		beforeEach ->
 			@tokenIsValidStub = m.sinon.stub(token, 'isValid')
 			@tokenIsValidStub.returns(Promise.resolve(true))
+			@tokenIsExpiredStub = m.sinon.stub(token, 'isExpired')
+			@tokenIsExpiredStub.returns(Promise.resolve(false))
 
 		afterEach ->
 			@tokenIsValidStub.restore()
+			@tokenIsExpiredStub.restore()
 
 		describe '.get()', ->
 
@@ -316,3 +324,24 @@ describe 'Token:', ->
 
 					it 'should eventually be undefined', ->
 						m.chai.expect(token.getAge()).to.eventually.be.undefined
+
+	describe '.isExpired()', ->
+		@timeout(5000)
+		expiredToken = expiredTokenFixture.token
+
+		it 'should be true after a delay', (done) ->
+			m.chai.expect(token.isExpired(expiredToken)).to.eventually.be.false
+			.notify ->
+				setTimeout ->
+					m.chai.expect(token.isExpired(expiredToken)).to.eventually.be.true
+					.notify(done)
+				, 1000
+
+			return
+
+		it 'should be taken into account when trying to set the expired token', (done) ->
+			setTimeout ->
+				m.chai.expect(token.set(expiredToken)).to.be.rejectedWith('The token has expired')
+				.notify(done)
+			, 1000
+

@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### Changed
+
+- The new static `isExpired` method to check the `exp` claim
+- The token expiration is now checked in `set` and the expired tokens are rejected
+
 ## [4.0.0] - 2017-03-29
 
 ### Changed

@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.0] - 2017-09-01
+
 ### Changed
 
 - Convert sources to TypeScript
@@ -111,6 +113,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Implement `token.parse()`.
 - Implement `token.getUsername()`.
 
+[4.2.0]: https://github.com/resin-io/resin-token/compare/v4.1.0...v4.2.0
 [4.1.0]: https://github.com/resin-io/resin-token/compare/v4.0.0...v4.1.0
 [4.0.0]: https://github.com/resin-io/resin-token/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/resin-io/resin-token/compare/v2.4.3...v3.0.0

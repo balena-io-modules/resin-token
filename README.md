@@ -42,59 +42,34 @@ It accepts the following params:
 
 **Example**
 ```js
-var token = require('resin-token')({
+const token = require('resin-token')({
 	dataDirectory: '/opt/cache/resin'
 })
 ```
 
-The returned `token` is an instance of `ResinToken` class.
-
 
 * [token](#module_token)
-    * [~ResinToken](#module_token..ResinToken)
-        * [.parse(token)](#module_token..ResinToken+parse) ⇒ <code>Promise.&lt;Object&gt;</code>
-        * [.isValid(token)](#module_token..ResinToken+isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-        * [.isExpired()](#module_token..ResinToken+isExpired) ⇒ <code>Promise.&lt;boolean&gt;</code>
-        * [.set(token)](#module_token..ResinToken+set) ⇒ <code>Promise.&lt;String&gt;</code>
-        * [.get()](#module_token..ResinToken+get) ⇒ <code>Promise.&lt;String&gt;</code>
-        * [.has()](#module_token..ResinToken+has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-        * [.remove()](#module_token..ResinToken+remove) ⇒ <code>Promise</code>
-        * [.getData()](#module_token..ResinToken+getData) ⇒ <code>Promise.&lt;Object&gt;</code>
-        * [.getProperty(property)](#module_token..ResinToken+getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
-        * [.getUsername()](#module_token..ResinToken+getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
-        * [.getUserId()](#module_token..ResinToken+getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
-        * [.getEmail()](#module_token..ResinToken+getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
-        * [.getAge()](#module_token..ResinToken+getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
+    * [~parse(token)](#module_token..parse) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [~isValid(token)](#module_token..isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+    * [~isExpired()](#module_token..isExpired) ⇒ <code>Promise.&lt;boolean&gt;</code>
+    * [~set(token)](#module_token..set) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~get()](#module_token..get) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~has()](#module_token..has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+    * [~remove()](#module_token..remove) ⇒ <code>Promise</code>
+    * [~getData()](#module_token..getData) ⇒ <code>Promise.&lt;Object&gt;</code>
+    * [~getProperty(property)](#module_token..getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [~getUsername()](#module_token..getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~getUserId()](#module_token..getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
+    * [~getEmail()](#module_token..getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [~getAge()](#module_token..getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
 
-<a name="module_token..ResinToken"></a>
+<a name="module_token..parse"></a>
 
-### token~ResinToken
-The class encapsulating all resin-token-related functionality.
-
-**Kind**: inner property of [<code>token</code>](#module_token)  
-
-* [~ResinToken](#module_token..ResinToken)
-    * [.parse(token)](#module_token..ResinToken+parse) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.isValid(token)](#module_token..ResinToken+isValid) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-    * [.isExpired()](#module_token..ResinToken+isExpired) ⇒ <code>Promise.&lt;boolean&gt;</code>
-    * [.set(token)](#module_token..ResinToken+set) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [.get()](#module_token..ResinToken+get) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [.has()](#module_token..ResinToken+has) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-    * [.remove()](#module_token..ResinToken+remove) ⇒ <code>Promise</code>
-    * [.getData()](#module_token..ResinToken+getData) ⇒ <code>Promise.&lt;Object&gt;</code>
-    * [.getProperty(property)](#module_token..ResinToken+getProperty) ⇒ <code>Promise.&lt;\*&gt;</code>
-    * [.getUsername()](#module_token..ResinToken+getUsername) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [.getUserId()](#module_token..ResinToken+getUserId) ⇒ <code>Promise.&lt;Number&gt;</code>
-    * [.getEmail()](#module_token..ResinToken+getEmail) ⇒ <code>Promise.&lt;String&gt;</code>
-    * [.getAge()](#module_token..ResinToken+getAge) ⇒ <code>Promise.&lt;Number&gt;</code>
-
-<a name="module_token..ResinToken+parse"></a>
-
-#### resinToken.parse(token) ⇒ <code>Promise.&lt;Object&gt;</code>
+### token~parse(token) ⇒ <code>Promise.&lt;Object&gt;</code>
 This function does't save the token. Use `token.set()` if you want to persist it afterwards.
 The returned promise is rejected if the token is invalid.
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Parse a token  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - parsed token  
 **Access**: public  
@@ -109,10 +84,10 @@ token.parse('...').then((parsedTokenData) => {
 	console.log(parsedTokenData);
 });
 ```
-<a name="module_token..ResinToken+isValid"></a>
+<a name="module_token..isValid"></a>
 
-#### resinToken.isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+### token~isValid(token) ⇒ <code>Promise.&lt;Boolean&gt;</code>
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Check if a token is valid  
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - is valid  
 **Access**: public  
@@ -129,10 +104,10 @@ token.isValid('...').then((isValid) => {
 	}
 });
 ```
-<a name="module_token..ResinToken+isExpired"></a>
+<a name="module_token..isExpired"></a>
 
-#### resinToken.isExpired() ⇒ <code>Promise.&lt;boolean&gt;</code>
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+### token~isExpired() ⇒ <code>Promise.&lt;boolean&gt;</code>
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Check if the given token has expired  
 **Access**: public  
 **Example**  
@@ -141,10 +116,10 @@ token.isExpired(jwtToken).then((isExpired) => {
 	console.log(isExpired);
 });
 ```
-<a name="module_token..ResinToken+set"></a>
+<a name="module_token..set"></a>
 
-#### resinToken.set(token) ⇒ <code>Promise.&lt;String&gt;</code>
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+### token~set(token) ⇒ <code>Promise.&lt;String&gt;</code>
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Set the token  
 **Returns**: <code>Promise.&lt;String&gt;</code> - token  
 **Access**: public  
@@ -157,12 +132,12 @@ token.isExpired(jwtToken).then((isExpired) => {
 ```js
 token.set('...');
 ```
-<a name="module_token..ResinToken+get"></a>
+<a name="module_token..get"></a>
 
-#### resinToken.get() ⇒ <code>Promise.&lt;String&gt;</code>
+### token~get() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolved to undefined if no token.
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get the token  
 **Returns**: <code>Promise.&lt;String&gt;</code> - token  
 **Access**: public  
@@ -172,10 +147,10 @@ token.get().then((sessionToken) => {
 	console.log(sessionToken);
 });
 ```
-<a name="module_token..ResinToken+has"></a>
+<a name="module_token..has"></a>
 
-#### resinToken.has() ⇒ <code>Promise.&lt;Boolean&gt;</code>
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+### token~has() ⇒ <code>Promise.&lt;Boolean&gt;</code>
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Has a token  
 **Returns**: <code>Promise.&lt;Boolean&gt;</code> - has token  
 **Access**: public  
@@ -189,24 +164,24 @@ token.has().then((hasToken) => {
 	}
 });
 ```
-<a name="module_token..ResinToken+remove"></a>
+<a name="module_token..remove"></a>
 
-#### resinToken.remove() ⇒ <code>Promise</code>
+### token~remove() ⇒ <code>Promise</code>
 This promise is not rejected if there was no token at the time of removal.
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Remove the token  
 **Access**: public  
 **Example**  
 ```js
 token.remove();
 ```
-<a name="module_token..ResinToken+getData"></a>
+<a name="module_token..getData"></a>
 
-#### resinToken.getData() ⇒ <code>Promise.&lt;Object&gt;</code>
+### token~getData() ⇒ <code>Promise.&lt;Object&gt;</code>
 It will resolve to `undefined` if there's no saved token
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get the data encoded in the saved token  
 **Returns**: <code>Promise.&lt;Object&gt;</code> - token data  
 **Access**: public  
@@ -216,13 +191,13 @@ token.getData().then((parsedTokenData) => {
 	console.log(parsedTokenData);
 });
 ```
-<a name="module_token..ResinToken+getProperty"></a>
+<a name="module_token..getProperty"></a>
 
-#### resinToken.getProperty(property) ⇒ <code>Promise.&lt;\*&gt;</code>
+### token~getProperty(property) ⇒ <code>Promise.&lt;\*&gt;</code>
 This function resolves to `undefined` for any property name if there is no token.
 It also resolved to `undefined` if the property name is invalid.
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get a property from a saved token  
 **Returns**: <code>Promise.&lt;\*&gt;</code> - property value  
 **Access**: public  
@@ -237,12 +212,12 @@ token.getProperty('username').then((username) => {
 	console.log(username);
 });
 ```
-<a name="module_token..ResinToken+getUsername"></a>
+<a name="module_token..getUsername"></a>
 
-#### resinToken.getUsername() ⇒ <code>Promise.&lt;String&gt;</code>
+### token~getUsername() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolves to `undefined` if there is no token
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get the username of the saved token  
 **Returns**: <code>Promise.&lt;String&gt;</code> - username  
 **Access**: public  
@@ -252,12 +227,12 @@ token.getUsername().then((username) => {
 	console.log(username);
 });
 ```
-<a name="module_token..ResinToken+getUserId"></a>
+<a name="module_token..getUserId"></a>
 
-#### resinToken.getUserId() ⇒ <code>Promise.&lt;Number&gt;</code>
+### token~getUserId() ⇒ <code>Promise.&lt;Number&gt;</code>
 This function resolves to `undefined` if there is no token
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get the user id of the saved token  
 **Returns**: <code>Promise.&lt;Number&gt;</code> - user id  
 **Access**: public  
@@ -267,12 +242,12 @@ token.getUserId().then((userId) => {
 	console.log(userId);
 });
 ```
-<a name="module_token..ResinToken+getEmail"></a>
+<a name="module_token..getEmail"></a>
 
-#### resinToken.getEmail() ⇒ <code>Promise.&lt;String&gt;</code>
+### token~getEmail() ⇒ <code>Promise.&lt;String&gt;</code>
 This function resolves to `undefined` if there is no token
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get the email of the saved token  
 **Returns**: <code>Promise.&lt;String&gt;</code> - email  
 **Access**: public  
@@ -282,12 +257,12 @@ token.getEmail().then((email) =>
 	console.log(email);
 });
 ```
-<a name="module_token..ResinToken+getAge"></a>
+<a name="module_token..getAge"></a>
 
-#### resinToken.getAge() ⇒ <code>Promise.&lt;Number&gt;</code>
+### token~getAge() ⇒ <code>Promise.&lt;Number&gt;</code>
 This function resolves to `undefined` if there is no token
 
-**Kind**: instance method of [<code>ResinToken</code>](#module_token..ResinToken)  
+**Kind**: inner method of [<code>token</code>](#module_token)  
 **Summary**: Get the age of the saved token  
 **Returns**: <code>Promise.&lt;Number&gt;</code> - age in milliseconds  
 **Access**: public  

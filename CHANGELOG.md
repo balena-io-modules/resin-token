@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [4.2.1] - 2017-09-05
+
+### Changed
+
+- Switch to bound methods to keep backward compatibility
+
 ## [4.2.0] - 2017-09-01
 
 ### Changed

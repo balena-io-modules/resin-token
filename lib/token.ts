@@ -30,9 +30,6 @@ interface ResinTokenOptions {
 	dataDirectory?: string;
 }
 
-/**
- * The class encapsulating all resin-token-related functionality.
- */
 class ResinToken {
 	private storage: ResinSettingsStorage;
 
@@ -43,6 +40,7 @@ class ResinToken {
 	}
 
 	/**
+	 * @member parse
 	 * @summary Parse a token
 	 * @function
 	 * @public
@@ -59,8 +57,8 @@ class ResinToken {
 	 * 	console.log(parsedTokenData);
 	 * });
 	 */
-	public parse(token: any): Promise<object> {
-		return Promise.try(() => {
+	public parse = (token: any): Promise<object> =>
+		Promise.try(() => {
 			if (typeof token !== 'string') {
 				throw new errors.ResinMalformedToken(token);
 			}
@@ -68,9 +66,9 @@ class ResinToken {
 		}).catch(() => {
 			throw new errors.ResinMalformedToken(token);
 		});
-	}
 
 	/**
+	 * @member isValid
 	 * @summary Check if a token is valid
 	 * @function
 	 * @public
@@ -85,13 +83,13 @@ class ResinToken {
 	 * 	}
 	 * });
 	 */
-	public isValid(token: any): Promise<boolean> {
-		return this.parse(token)
+	public isValid = (token: any): Promise<boolean> =>
+		this.parse(token)
 			.return(true)
 			.catch(errors.ResinMalformedToken, () => false);
-	}
 
 	/**
+	 * @member isExpired
 	 * @summary Check if the given token has expired
 	 * @function
 	 * @public
@@ -103,8 +101,8 @@ class ResinToken {
 	 * 	console.log(isExpired);
 	 * });
 	 */
-	public isExpired(token: string): Promise<boolean> {
-		return this.parse(token)
+	public isExpired = (token: string): Promise<boolean> =>
+		this.parse(token)
 			.get<number>('exp')
 			.then(exp => {
 				if (exp == null) {
@@ -114,9 +112,9 @@ class ResinToken {
 				// exp stands for "expires", and represents a date in seconds
 				return Date.now() > exp * 1000;
 			});
-	}
 
 	/**
+	 * @member set
 	 * @summary Set the token
 	 * @function
 	 * @public
@@ -127,8 +125,8 @@ class ResinToken {
 	 * @example
 	 * token.set('...');
 	 */
-	public set(token: any): Promise<void> {
-		return this.isValid(token)
+	public set = (token: any): Promise<void> =>
+		this.isValid(token)
 			.then(isTokenValid => {
 				if (!isTokenValid) {
 					throw new Error('The token is invalid');
@@ -141,9 +139,9 @@ class ResinToken {
 				}
 				return this.storage.set(TOKEN_KEY, token.trim());
 			});
-	}
 
 	/**
+	 * @member get
 	 * @summary Get the token
 	 * @function
 	 * @public
@@ -158,11 +156,10 @@ class ResinToken {
 	 * 	console.log(sessionToken);
 	 * });
 	 */
-	public get() {
-		return this.storage.get(TOKEN_KEY);
-	}
+	public get = () => this.storage.get(TOKEN_KEY);
 
 	/**
+	 * @member has
 	 * @summary Has a token
 	 * @function
 	 * @public
@@ -178,11 +175,10 @@ class ResinToken {
 	 * 	}
 	 * });
 	 */
-	public has() {
-		return this.storage.has(TOKEN_KEY);
-	}
+	public has = () => this.storage.has(TOKEN_KEY);
 
 	/**
+	 * @member remove
 	 * @summary Remove the token
 	 * @function
 	 * @public
@@ -195,11 +191,10 @@ class ResinToken {
 	 * @example
 	 * token.remove();
 	 */
-	public remove() {
-		return this.storage.remove(TOKEN_KEY);
-	}
+	public remove = () => this.storage.remove(TOKEN_KEY);
 
 	/**
+	 * @member getData
 	 * @summary Get the data encoded in the saved token
 	 * @function
 	 * @public
@@ -214,17 +209,17 @@ class ResinToken {
 	 * 	console.log(parsedTokenData);
 	 * });
 	 */
-	public getData(): Promise<{ [property: string]: any } | undefined> {
-		return this.get().then(token => {
+	public getData = (): Promise<{ [property: string]: any } | undefined> =>
+		this.get().then(token => {
 			if (!token) {
 				// TODO: this shouldn't be needed but TS fails with bare `return` here
 				return Promise.resolve(undefined);
 			}
 			return this.parse(token as string);
 		});
-	}
 
 	/**
+	 * @member getProperty
 	 * @summary Get a property from a saved token
 	 * @function
 	 * @public
@@ -241,14 +236,14 @@ class ResinToken {
 	 * 	console.log(username);
 	 * });
 	 */
-	public getProperty<T>(property: string): Promise<T | undefined> {
-		return this.getData().then(
+	public getProperty = <T>(property: string): Promise<T | undefined> =>
+		this.getData().then(
 			(data: { [property: string]: T } | undefined) =>
 				data != null ? data[property] : undefined
 		);
-	}
 
 	/**
+	 * @member getUsername
 	 * @summary Get the username of the saved token
 	 * @function
 	 * @public
@@ -263,11 +258,10 @@ class ResinToken {
 	 * 	console.log(username);
 	 * });
 	 */
-	public getUsername() {
-		return this.getProperty<string>('username');
-	}
+	public getUsername = () => this.getProperty<string>('username');
 
 	/**
+	 * @member getUserId
 	 * @summary Get the user id of the saved token
 	 * @function
 	 * @public
@@ -282,11 +276,10 @@ class ResinToken {
 	 * 	console.log(userId);
 	 * });
 	 */
-	public getUserId() {
-		return this.getProperty<string>('id');
-	}
+	public getUserId = () => this.getProperty<string>('id');
 
 	/**
+	 * @member getEmail
 	 * @summary Get the email of the saved token
 	 * @function
 	 * @public
@@ -301,11 +294,10 @@ class ResinToken {
 	 * 	console.log(email);
 	 * });
 	 */
-	public getEmail() {
-		return this.getProperty<string>('email');
-	}
+	public getEmail = () => this.getProperty<string>('email');
 
 	/**
+	 * @member getAge
 	 * @summary Get the age of the saved token
 	 * @function
 	 * @public
@@ -320,8 +312,8 @@ class ResinToken {
 	 * 	console.log(age);
 	 * });
 	 */
-	public getAge() {
-		return this.getProperty<number>('iat').then(iat => {
+	public getAge = () =>
+		this.getProperty<number>('iat').then(iat => {
 			if (iat == null) {
 				return;
 			}
@@ -330,7 +322,6 @@ class ResinToken {
 			// but we convert to milliseconds for consistency
 			return Date.now() - iat * 1000;
 		});
-	}
 }
 
 const getToken = (options: ResinTokenOptions) => {

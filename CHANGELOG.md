@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [4.2.1] - 2017-09-05
 
+## 4.2.2 - 2019-05-10
+
+* Fix: Use declaration file for types [Rich Bayliss]
+
 ### Changed
 
 - Switch to bound methods to keep backward compatibility

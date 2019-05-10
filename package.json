@@ -1,6 +1,6 @@
 {
   "name": "resin-token",
-  "version": "4.2.1",
+  "version": "4.2.2",
   "description": "Resin.io session token utilities",
   "main": "build/token.js",
   "types": "build/token.d.ts",

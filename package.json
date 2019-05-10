@@ -3,7 +3,7 @@
   "version": "4.2.1",
   "description": "Resin.io session token utilities",
   "main": "build/token.js",
-  "types": "lib/token.ts",
+  "types": "build/token.d.ts",
   "homepage": "https://github.com/resin-io/resin-token",
   "repository": {
     "type": "git",
@@ -18,13 +18,13 @@
     "test": "tests"
   },
   "scripts": {
-    "test:node": "mocha -r ts-node/register --reporter spec tests/**/*.spec.ts",
+    "test:node": "mocha -r ts-node/register/transpile-only --reporter spec tests/**/*.spec.ts",
     "test:browser": "karma start",
     "lint": "tslint \"lib/**/*.ts\" \"tests/**/*.ts\"",
     "test": "npm run build && npm run lint && npm run test:node && npm run test:browser",
     "build": "rimraf ./build && npm run prettify && tsc && npm run readme",
     "prepublish": "require-npm4-to-publish",
-    "prepublishOnly": "npm test",
+    "prepare": "npm test",
     "prettify": "prettier --use-tabs --single-quote --write \"lib/*.ts\" \"tests/**/*.ts\"",
     "readme": "jsdoc2md --template doc/README.hbs build/token.js > README.md"
   },
@@ -47,9 +47,9 @@
     "resin-settings-client": "^3.7.0",
     "rimraf": "^2.6.1",
     "timekeeper": "1.0.0",
-    "ts-node": "^3.3.0",
+    "ts-node": "^7.0.1",
     "tslint": "^5.5.0",
-    "typescript": "2.4.2"
+    "typescript": "^3.4.5"
   },
   "dependencies": {
     "@types/bluebird": "^3.5.8",

@@ -11,13 +11,10 @@
     "pretty": true,
     "sourceMap": true,
     "strictNullChecks": true,
+    "declaration": true,
     "lib": ["es5", "es6", "dom"],
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules/@resin.io"
-    ]
+    "typeRoots": ["node_modules/@types", "node_modules/@resin.io"],
+    "skipLibCheck": true
   },
-  "include": [
-    "lib/**/*.ts"
-  ]
+  "include": ["lib/**/*.ts"]
 }

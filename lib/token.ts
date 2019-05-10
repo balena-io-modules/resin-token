@@ -57,7 +57,7 @@ class ResinToken {
 	 * 	console.log(parsedTokenData);
 	 * });
 	 */
-	public parse = (token: any): Promise<object> =>
+	public parse = (token: any): Promise<{ [index: string]: any }> =>
 		Promise.try(() => {
 			if (typeof token !== 'string') {
 				throw new errors.ResinMalformedToken(token);
@@ -102,16 +102,14 @@ class ResinToken {
 	 * });
 	 */
 	public isExpired = (token: string): Promise<boolean> =>
-		this.parse(token)
-			.get<number>('exp')
-			.then(exp => {
-				if (exp == null) {
-					return false;
-				}
+		this.parse(token).then(({ exp }: { exp?: number }) => {
+			if (exp == null) {
+				return false;
+			}
 
-				// exp stands for "expires", and represents a date in seconds
-				return Date.now() > exp * 1000;
-			});
+			// exp stands for "expires", and represents a date in seconds
+			return Date.now() > exp * 1000;
+		});
 
 	/**
 	 * @member set
@@ -237,9 +235,8 @@ class ResinToken {
 	 * });
 	 */
 	public getProperty = <T>(property: string): Promise<T | undefined> =>
-		this.getData().then(
-			(data: { [property: string]: T } | undefined) =>
-				data != null ? data[property] : undefined
+		this.getData().then((data: { [property: string]: T } | undefined) =>
+			data != null ? data[property] : undefined
 		);
 
 	/**

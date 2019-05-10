@@ -22,10 +22,10 @@ var jwtDecode = require("jwt-decode");
 var errors = require("resin-errors");
 var getStorage = require("resin-settings-storage");
 var TOKEN_KEY = 'token';
-var ResinToken = (function () {
+var ResinToken = /** @class */ (function () {
     function ResinToken(_a) {
-        var dataDirectory = (_a === void 0 ? { dataDirectory: undefined } : _a).dataDirectory;
         var _this = this;
+        var dataDirectory = (_a === void 0 ? { dataDirectory: undefined } : _a).dataDirectory;
         /**
          * @member parse
          * @summary Parse a token
@@ -89,9 +89,8 @@ var ResinToken = (function () {
          * });
          */
         this.isExpired = function (token) {
-            return _this.parse(token)
-                .get('exp')
-                .then(function (exp) {
+            return _this.parse(token).then(function (_a) {
+                var exp = _a.exp;
                 if (exp == null) {
                     return false;
                 }
